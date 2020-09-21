@@ -88,27 +88,24 @@
                         <div class="text-center">
                             <form method="post" action="{{ url('/order')}}">
                                 {{ csrf_field() }}
-                                <div class="row">
+                                <!-- Sector para Ingresar el cliente en el pedido -->
+                                <!-- <div class="row">
                                     <div class="col-sm-4">
-                                    <div class="form-group label-floating">
-                                    <!--<div class="col-auto my-1"> -->
-                                        <label class="form-group label-floating">Seleccionar  Cliente  </label>
-                                        <select  class= "form-control" name="client_id" value="{{ old('client_id') }}">
-                                            <option value="0">Sin Asignar Cliente</option>
-                                            @foreach($clients as $client)
-                                            {
-                                                <option value="{{$client->id}}">{{$client->name}}</option>   
-                                            }
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group label-floating">
+                                            <label class="form-group label-floating">Seleccionar  Cliente  </label>
+                                            <select  class= "form-control" name="client_id" value="{{ old('client_id') }}">
+                                                <option value="0">Sin Asignar Cliente</option>
+                                                @foreach($clients as $client)
+                                                {
+                                                    <option value="{{$client->id}}">{{$client->name}}</option>   
+                                                }
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                    </div>
-                            </div>
-
-
-
+                                </div>  -->
                                 <button class="btn btn-primary btn-round">
-                                    <i class="material-icons">done</i> Confirmar Remito
+                                    <i class="material-icons">done</i> Confirmar Pedido
                                 </button>
                             </form>
                         </div>  

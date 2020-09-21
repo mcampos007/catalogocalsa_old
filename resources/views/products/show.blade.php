@@ -38,11 +38,11 @@
             <div class="text-center">
                 @if (auth()->check())
                     <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#ModalAddToCart">
-                        <i class="material-icons">add</i> Agregar a Comanda
+                        <i class="material-icons">add</i> Agregar al Pedido
                     </button>
                 @else
                     <a href=" {{ url('/login?redirect_to='.url()->current()) }}" class="btn btn-primary btn-round" >
-                        <i class="material-icons">add</i> Agregar a Comanda
+                        <i class="material-icons">add</i> Agregar al Pedido
                     </a>
                 @endif
             </div>
@@ -96,7 +96,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-info btn-simple">Añadir a Comada</button>
+            <button type="submit" class="btn btn-info btn-simple">Añadir al Pedido</button>
           </div>
       </form>
     </div>

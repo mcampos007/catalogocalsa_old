@@ -80,7 +80,7 @@ class CartController extends Controller
         //
          $client = auth()->user() ;
          $cart = $client->cart;
-         $cart->status = 'Pending';
+        // $cart->status = 'Pending';
          $cart->client_id = $request->input('client_id');
          $cart->order_date = Carbon::now();
          foreach ($cart->details as $item){
@@ -97,11 +97,11 @@ class CartController extends Controller
 
          //Poner precio en los articulos del remito
         
-         
+        $admins = "ventasonline@grupocisterna.com.ar";        
          //$admins = User::where('admin',true)->get()->pluck('email');
-         //mail::to($admins)->send(new NewOrder($client, $cart));
+         mail::to($admins)->send(new NewOrder($client, $cart));
          
-         //$notification = "Tu Remito ya fué confirmado";
+         $notification = "Tu Pedido ya fué confirmado y en Breve nos pondremos en contacto";
 
          $clients = Client::All();
          $remitos = Cart::All();

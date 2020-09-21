@@ -63,7 +63,7 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ url('/home')}}">Ver Mis Remitos</a>
+                                    <a href="{{ url('/home')}}">Ver Mis Pedidos</a>
                                 </li>
                                 @if (auth()->user()->admin)
                                 <li>
