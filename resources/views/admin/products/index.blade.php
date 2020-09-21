@@ -14,6 +14,11 @@
             <h2 class="title">Listado de Productos</h2>
 
             <div class="team">
+                @if (session()->has('msj'))
+                    <div class="alert alert-danger" role="alert">
+                          <strong>Error:!!</strong>{{session('msj')}}
+                    </div>
+                @endif
                 <div class="row">
                     <a href="{{ url('/admin/products/create')}}" class="btn btn-primary btn-round">Nuevo Producto</a>
                     <table class="table">

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\ProductImage;
+use App\CartDetail;
+use File;
 class ProductController extends Controller
 {
     /**
@@ -148,10 +151,31 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
-        $product = Product::find($id);
- 
-        $product->delete();
-        return back();
+        $vendidos = CartDetail::where('product_id',$id)->get();
+        $cantvend = $vendidos->count();
+        //dd($cantvend);
+        $images = ProductImage::where('product_id',$id)->get();
+
+        $cant = $images->count();
+
+        //dd($cant);
+          
+        //dd($product);
+        if ($cantvend===0)
+        {
+            if ($cant===0)
+            {
+                $product = Product::find($id);
+                $product->delete();
+                return back();
+            }else{
+                return back()->with('msj','No se puede eliminar un Producto que tenga Imagenes');    
+            }
+        }else{
+           return back()->with('msj','No se puede eliminar un Producto que tenga Ventas realizadas');     
+        }
+        ///
+        
     }
 }
 

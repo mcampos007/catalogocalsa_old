@@ -29,7 +29,8 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'ventasonline',
             'email'=> 'ventasonline@grupocisterna.com.ar',
-            'password' => bcrypt('20092020')
+            'password' => bcrypt('20092020'),
+            'admin' => true
         ]);
     }
 }
