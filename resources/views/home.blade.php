@@ -16,13 +16,13 @@
                     <li class="active">
                         <a href="#dashboard" role="tab" data-toggle="tab">
                             <i class="material-icons">camera</i>
-                            Dashboard
+                            Pedido Actual
                         </a>
                     </li>
                     <li>
                         <a href="#remitos" role="tab" data-toggle="tab">
                             <i class="material-icons">palette</i>
-                            Remitos
+                            Pedidos Realizados
                         </a>
                     </li>
                     <!-- <li>
@@ -34,11 +34,16 @@
                 </ul>
 
 				<div class="tab-content gallery">
+                    @if (session()->has('notification'))
+                        <div class="alert alert-danger" role="alert">
+                              <strong>Error:!!</strong>{{session('notification')}}
+                        </div>
+                    @endif
                     <div class="tab-pane active" id="dashboard">
                         <hr>
                          @if (auth()->user()->cart)
              
-                        <p>Tu Remito tiene {{ auth()->user()->cart->details->count() }} Items</p>
+                        <p>Tu Pedido tiene {{ auth()->user()->cart->details->count() }} Items</p>
                         <table class="table">
                                     <thead>
                                         <tr>

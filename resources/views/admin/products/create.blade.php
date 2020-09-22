@@ -47,6 +47,12 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group label-floating">
+                            <label class="control-label">Código</label>
+                            <input type="text" class="form-control" name="nro_art" value="{{ old('nro_art')}}">
+                        </div>    
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group label-floating">
                             <label class="control-label">Precio del  Producto</label>
                             <input type="number" class="form-control" name="price" value="{{ old('price')}}">
                         </div>

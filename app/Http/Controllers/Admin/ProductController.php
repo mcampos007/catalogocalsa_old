@@ -68,6 +68,7 @@ class ProductController extends Controller
         //dd($request->all());
         $product = new Product();
         $product->name  = $request->input('name');
+        $product->nro_art = $request->input('nro_art');
         $product->description  = $request->input('description');
         $product->price  = $request->input('price');
         $product->long_description  = $request->input('long_description');
@@ -134,6 +135,7 @@ class ProductController extends Controller
         //
         $product = Product::find($id);
         $product->name  = $request->input('name');
+        $product->nro_art = $request->input('nro_art');
         $product->description  = $request->input('description');
         $product->price  = $request->input('price');
         $product->long_description  = $request->input('long_description');

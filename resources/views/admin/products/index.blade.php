@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
+                                <th class="text-center">Código</th>
                                 <th class="col-md-2 text-center">Nombre</th>
                                 <th class="col-md-5 text-center">Descripcion</th>
                                 <th class="text-center">Categoria</th>
@@ -36,6 +37,7 @@
                             @foreach($products as $product)
                             <tr>
                                 <td class="text-center">{{ $product->id }}</td>
+                                <td>{{ $product->nro_art }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td>{{ $product->category_name }}</td>

@@ -80,7 +80,7 @@ class CartController extends Controller
         //
          $client = auth()->user() ;
          $cart = $client->cart;
-        // $cart->status = 'Pending';
+         $cart->status = 'Pending';
          $cart->client_id = $request->input('client_id');
          $cart->order_date = Carbon::now();
          foreach ($cart->details as $item){

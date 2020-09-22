@@ -45,6 +45,10 @@
                         <div class="form-group label-floating">
                             <label class="control-label">Nombre del Producto</label>
                             <input type="text" class="form-control" name="name" value="{{ old('name', $product->name) }}">
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Código</label>
+                            <input type="text" class="form-control" name="nro_art" value="{{ old('nro_art', $product->nro_art) }}">
                         </div>    
                     </div>
                     <div class="col-sm-6">
