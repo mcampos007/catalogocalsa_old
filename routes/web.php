@@ -103,7 +103,9 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::get('/pagos/{id}/nuevopago','PaymentController@nuevopago');			//Formulario de Pagos
 	Route::post('/pagos','PaymentController@store');							// Rergistro del pago en la BD
 
-
+	//Pedidos
+	//Parte Admin
+	Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
 
 
 });

@@ -16,7 +16,7 @@
                     <input type="text" class="form-control" id="" name="client_name" value="{{$remito->client_name}}">
                 </div>
                 <div class="col-sm-6">
-                    <label >Remito N°</label>
+                    <label >Pedido N°</label>
                     <input type="text" class="form-control" id="" name="remito_id" value="{{ $remito->id }}">
                 </div>
             </div>
@@ -25,6 +25,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
+                        <th class="text-center">Código</th>
                         <th class="text-center">Nombre</th>
                         <th >Precio</th>
                         <th >Cantidad</th>
@@ -36,6 +37,9 @@
                         <tr>
                             <td>
                                 {{ $detail->id }}
+                            </td>
+                            <td>
+                                {{ $detail->product->nro_art }}
                             </td>
                             <td>
                                 {{ $detail->product->name }}
