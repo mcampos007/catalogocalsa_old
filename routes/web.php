@@ -13,6 +13,10 @@ l<?php
 
 Route::get('/', 'TestController@welcome');
 
+Route::get('/precios','PrecioController@index');
+Route::get('/searchprecios','PrecioController@show');
+Route::get('/precios/json', 'PrecioController@data');
+
 Route::get('/search', 'SearchController@show');
 Route::get('/products/json', 'SearchController@data');
 
@@ -32,6 +36,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
+
 	//Productos 
 	Route::get('/products','ProductController@index');
 	Route::get('/products/create','ProductController@create');

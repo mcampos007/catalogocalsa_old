@@ -52,8 +52,10 @@
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
                     @guest
+                        
                         <li><a href="{{ route('login') }}">Ingresar</a></li>
                         <li><a href="{{ route('register') }}">Registro</a></li>
+                        <li><a href="{{ url('/precios') }}">Lista de Precios</a></li>
                        <!-- <li><a href="#">Registro</a></li> -->
                     @else
                         <li class="dropdown">
