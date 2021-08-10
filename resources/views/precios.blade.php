@@ -73,19 +73,25 @@
 -->
 <div class="header header-filter" style="background-image: url(' {{ asset('img/demofondo1.jpg') }}'); background-size: cover; background-position: top center;"> 
 </div>
-
 <div class="main main-raised" id="divprecios">
-   <div class="container row">                          
-        <div class="section text-center">
-            <h2 class="title">Lista de Precios</h2>
-            <form class="form-inline" method="get" action="{{ url('searchprecios')}}">
-                <input type="text" placeholder="¿Que estas buscando?" name="query" class="form-control" id="search">
-                <button class="btn btn-primary btn-just-icon" type="submit">
-                    <i class="material-icons">search</i>
-                </button>
-            </form>
-            <div class="table-responsive">
-            <!-- Projects table -->
+    <div class="container">
+        <h2 class="title">Listado de Productos</h2>
+        <div class="row">
+            <div class="col-x1-12">
+                <form action="{{route('precios.index')}}" method="GET">
+                     
+                    
+                    <div class="form-row">
+                        <div class="col-sm-4 my-1">
+                            <input type="text" name="texto" class="form-control" value="{{$texto}}">
+                        </div>
+                        <div class="col-auto my-1">
+                            <input type="submit" class="btn btn-primary" value="Buscar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-x1-12">
                 <table class="table align-items-center table-flush">
                   <thead class="thead-light">
                     <tr>
@@ -115,19 +121,20 @@
                   </tbody>
                 </table>
                 <div class="text-center">
-                    {{ $products->links() }}    
+                    {!! $products->appends(["texto" => $texto]) !!}
+                    {{-- {{ $products->links() }}  --}}   
                 </div>
-          </div>   
+                
+            </div>
         </div>
-    </div> 
+    </div>
 </div>
-
 
 @include('includes.footer')
 @endsection
 
 @section('scripts')
-    <script src=" {{ asset('js/typeahead.bundle.min.js')}}" type="text/javascript"></script>
+    {{-- <script src=" {{ asset('js/typeahead.bundle.min.js')}}" type="text/javascript"></script>
     <script >
         $(function(){
             // Inicializar typeahead sobre nuestro input de busqueda
@@ -147,5 +154,5 @@
                 source:products
             })
         });
-    </script>
+    </script> --}}
 @endsection

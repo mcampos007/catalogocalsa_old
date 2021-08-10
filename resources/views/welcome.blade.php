@@ -75,7 +75,7 @@
                 <h4>Acompañandote desde 1988"</h4>
                 <br />
 
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-danger btn-raised btn-lg">
+                <a href="#" class="btn btn-danger btn-raised btn-lg">
                     <i class="fa fa-play"></i> ¿Quienes Somos?
                 </a>
             </div>

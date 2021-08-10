@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Precio;
 use App\Category;
@@ -10,9 +11,16 @@ use App\Category;
 class PrecioController extends Controller
 {
     //
-    public function index(){
-        $products = Product::paginate(10);
-        return view('precios')->with(compact('products'));
+    public function index(Request $request){
+        $texto = trim($request->input('texto'));
+        //dd($texto);
+        $products = DB::table('products')
+            ->select('id','name','price','nro_art')
+            ->where('name','LIKE','%'.$texto.'%')
+            ->orderBy('name','asc')
+            ->paginate(5);
+
+       return view('precios')->with(compact('products','texto'));
     }
 
     public function data()
@@ -25,16 +33,17 @@ class PrecioController extends Controller
     {
         //
 
-        $query = $request->input('query');
+       $query = $request->input('query');        
 
-        $products = Product::where('name','like',"%$query%")->paginate(5);
-
-        if ($products->count() == 1){
-            $id = $products->first()->id;
-            return redirect("products/$id");
+        if(isset($query)){
+           $products = Product::where('name','like',"%$query%")->paginate(5);
         }
+        else{
 
-
+            $products = Product::paginate(5);
+           
+        }
+       
         return view('search.showprices')->with(compact('products','query'));
 
     }

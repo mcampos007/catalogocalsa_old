@@ -13,9 +13,10 @@ l<?php
 
 Route::get('/', 'TestController@welcome');
 
-Route::get('/precios','PrecioController@index');
-Route::get('/searchprecios','PrecioController@show');
-Route::get('/precios/json', 'PrecioController@data');
+/*Route::get('/precios','PrecioController@index');
+Route::post('/searchprecios','PrecioController@show');
+Route::get('/precios/json', 'PrecioController@data');*/
+Route::resource('/precios',PrecioController::class);
 
 Route::get('/search', 'SearchController@show');
 Route::get('/products/json', 'SearchController@data');
