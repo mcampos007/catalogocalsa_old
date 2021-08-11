@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Precios '. config('app.name'))
 
-@section('body-class','landing-page')
+@section('body-class','profile-page')
 
 @section('styles')
     <style >
@@ -71,16 +71,19 @@
 @section('content')
 <!--<div class="header header-filter" style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
 -->
-<div class="header header-filter" style="background-image: url(' {{ asset('img/demofondo1.jpg') }}'); background-size: cover; background-position: top center;"> 
-</div>
-<div class="main main-raised" id="divprecios">
+{{-- <div class="header header-filter" style="background-image: url(' {{ asset('img/demofondo1.jpg') }}'); background-size: cover; background-position: top center;"> 
+</div> --}}
+<div class="header header-filter" style="background-image: url(' {{ asset('img/demofondo1.jpg') }}');"></div>
+
+<div class="main main-raised">
     <div class="container">
         <h2 class="title">Listado de Productos</h2>
-        <div class="row">
+    </div>
+    <div class="profile-content">
+        <div class="container">
+            <div class="row">
             <div class="col-x1-12">
-                <form action="{{route('precios.index')}}" method="GET">
-                     
-                    
+                <form action="{{route('precios.index')}}" method="GET">  
                     <div class="form-row">
                         <div class="col-sm-4 my-1">
                             <input type="text" name="texto" class="form-control" value="{{$texto}}">
@@ -99,6 +102,8 @@
                       <th scope="col">Código</th>
                       <th scope="col">Artículo</th>
                       <th scope="col">Precio</th>
+                      <th scope="col">Descuento Max</th>
+                      <th scope="col">Precio c/Descuento</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,6 +121,12 @@
                       <td scope="row">
                         {{ $product->price}}
                       </td>
+                      <td scope="row">
+                        {{ $product->topedesc}}
+                      </td>
+                      <td scope="row">
+                        {{ $product->con_descuento}}
+                      </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -127,7 +138,9 @@
                 
             </div>
         </div>
-    </div>
+        </div>
+        
+    </div>  
 </div>
 
 @include('includes.footer')

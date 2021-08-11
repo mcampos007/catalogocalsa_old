@@ -15,7 +15,7 @@ class PrecioController extends Controller
         $texto = trim($request->input('texto'));
         //dd($texto);
         $products = DB::table('products')
-            ->select('id','name','price','nro_art')
+            ->select('id','name','price','nro_art','topedesc','con_descuento')
             ->where('name','LIKE','%'.$texto.'%')
             ->orderBy('name','asc')
             ->paginate(5);
