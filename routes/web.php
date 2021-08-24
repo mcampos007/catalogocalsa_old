@@ -38,6 +38,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
+	//Precios protegido
+	Route::get('/precios','PrecioController@index');
+
 	//Productos 
 	Route::get('/products','ProductController@index');
 	Route::get('/products/create','ProductController@create');

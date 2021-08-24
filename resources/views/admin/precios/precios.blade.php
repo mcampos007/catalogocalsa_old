@@ -102,6 +102,8 @@
                       <th scope="col">Código</th>
                       <th scope="col">Artículo</th>
                       <th scope="col">Precio</th>
+                      <th scope="col">Descuento Max</th>
+                      <th scope="col">Precio c/Descuento</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -119,7 +121,12 @@
                       <td scope="row">
                         {{ $product->price}}
                       </td>
-                      
+                      <td scope="row">
+                        {{ $product->topedesc}}
+                      </td>
+                      <td scope="row">
+                        {{ $product->con_descuento}}
+                      </td>
                     </tr>
                     @endforeach
                   </tbody>
