@@ -18,6 +18,11 @@ class Product extends Model
     	return $this->hasMany(ProductImage::class);
     }
 
+    //$product->sector
+    public function sector(){
+        return $this->belongsTo(Sector::class);
+    }
+
     public function getFeaturedImageUrlAttribute()
     {
     	$featuredImage = $this->images()->where('featured',true)->first();

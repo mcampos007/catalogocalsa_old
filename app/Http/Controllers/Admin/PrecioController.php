@@ -18,10 +18,24 @@ class PrecioController extends Controller
         $products = DB::table('products')
             ->select('id','name','price','nro_art','topedesc','con_descuento')
             ->where('name','LIKE','%'.$texto.'%')
+            ->where('sector_id','=','1')
             ->orderBy('name','asc')
             ->paginate(5);
 
        return view('admin.precios.precios')->with(compact('products','texto'));
+    }
+
+    public function indexf(Request $request){
+        $texto = trim($request->input('texto'));
+        //dd($texto);
+        $products = DB::table('products')
+            ->select('id','name','price','nro_art','topedesc','con_descuento')
+            ->where('name','LIKE','%'.$texto.'%')
+            ->where('sector_id','=','2')
+            ->orderBy('name','asc')
+            ->paginate(5);
+
+       return view('admin.precios.preciosf')->with(compact('products','texto'));
     }
 
     public function data()

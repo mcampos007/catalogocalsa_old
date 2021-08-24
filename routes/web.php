@@ -38,8 +38,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
+	// Definicion de los sectores
+	Route::get('/sectors','SectorController@index');			//Listado de Sectores
+	Route::get('/sectors/create','SectorController@create');	// Form de alta de Secores
+	Route::post('/sectors','SectorController@store');			// Alta del Sector
+	Route::get('/sectors/{id}/edit','SectorController@edit');	// fmr para Edit
+	Route::post('/sectors/{id}/edit','SectorController@update');// Actualización del Sector
+	Route::delete('/sectors/{id}','SectorController@destroy');
+
 	//Precios protegido
 	Route::get('/precios','PrecioController@index');
+	Route::get('/preciosf','PrecioController@indexf');
 
 	//Productos 
 	Route::get('/products','ProductController@index');

@@ -69,7 +69,10 @@
                                 </li>
                                 @if (auth()->user()->admin)
                                 <li>
-                                    <a href="{{ url('/admin/precios') }}">Lista de Precios</a>
+                                    <a href="{{ url('/admin/precios') }}">Lista de Precios Calsa</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/admin/preciosf') }}">Lista de Precios Fiambres</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/admin/products')}}">Gestionar Productos</a>
@@ -85,6 +88,9 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('/admin/pagos')}}">Gestionar Pagos</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/admin/sectors')}}">Gestionar Sectores</a>
                                 </li>
                                 @endif
                                 <li>
