@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Sector;
 use App\Product;
 use File;
 class CategoryController extends Controller
@@ -96,7 +97,8 @@ class CategoryController extends Controller
     {
         //
         $category = Category::find($id);
-        return view('admin.categories.edit')->with(compact('category'));
+        $sectors = Sector::all();
+        return view('admin.categories.edit')->with(compact('category', 'sectors'));
     }
 
     /**
@@ -127,6 +129,7 @@ class CategoryController extends Controller
         $category->description = $request->input('description');
 
         $file = $request->file('image');
+        $eliminar_anterior = false;
         if ($file)
         {
             $path = public_path().'/images/categories';

@@ -11,7 +11,7 @@
 <div class="main main-raised">
     <div class="container">
         <div class="section text-center">
-            <h2 class="title">Listado de Categorias</h2>
+            <h2 class="title">Listado de Categorias </h2>
 
             <div class="team">
                 @if (session()->has('msj'))
@@ -26,8 +26,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="col-md-2 text-center">Nombre</th>
-                                <th class="col-md-5 text-center">Descripcion</th>
+                                <th class="col-md-4 text-center">Nombre</th>
+                                <th class="col-md-1 text-center">Descripcion</th>
+                                <th class="col-md-4 text-center">Sector</th>
                                 <th>Imágen</th>
                                 <!-- <th class="text-center">Categoria</th>
                                 <th >Precio</th>-->
@@ -40,6 +41,7 @@
                                 <td class="text-center">{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->description }}</td>
+                                <td>{{ $category->sector->name }}</td>
                                 <td>
                                     <img src="{{ url($category->featured_image_url) }}" height="50">
                                 </td>

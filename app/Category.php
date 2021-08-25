@@ -12,6 +12,11 @@ class Category extends Model
 
     	return $this->hasMany(Product::class);
     }
+    //$category->sector
+    public function sector(){
+
+        return $this->belongsTo(Category::class);
+    }
 
     public function getFeaturedImageUrlAttribute()
     {

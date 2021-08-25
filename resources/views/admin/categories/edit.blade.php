@@ -1,4 +1,4 @@
-extends('layouts.app')
+@extends('layouts.app')
 
 @section('title','Bienvenido a DigTab by Infocam')
 
@@ -32,19 +32,27 @@ extends('layouts.app')
                             <input type="text" class="form-control" name="name" value="{{ old('name', $category->name) }}">
                         </div>    
                     </div>
-                   
+                </div>   
+                <div class="form-group label-floating">  
+                    Sector 
+                    @foreach ($sectors as $key => $sector)
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="sector_id" id="exampleRadios1" value="{{ $key }}" @if($category->sector_id == $key+1) checked @endif>
+                            <label class="form-check-label" for="sector">
+                                {{ $sector->name}}
+                            </label>
+                        </div>
+                    @endforeach    
                 </div>
-                
-                
                 <div class="form-group label-floating">
-                    <label class="control-label">Descripción</label>
+                    <label class="control-label">Descripción de la Categoría</label>
                     <input type="text" class="form-control" name="description" value="{{ old('description',$category->description) }}">
                 </div>
                 
                 <div class="row">
                     <div class="col-sm-6">
                             <label class="control-label">Imagen de la Categoría</label>
-                            <input type="file" name="image" required>
+                            <input type="file" name="image" >
                             @if ( $category->image )
                             <p class="help-block">Subir solo si desea reemplazar la 
                                 <a href="{{ asset('/images/categories/'.$category->image) }}" target="_blank">
