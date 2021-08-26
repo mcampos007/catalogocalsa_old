@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Precio;
 use App\Category;
+use App\Sector;
 
 class PrecioController extends Controller
 {
@@ -21,7 +22,7 @@ class PrecioController extends Controller
             ->where('sector_id','=','1')
             ->orderBy('name','asc')
             ->paginate(5);
-
+            dd($products);
        return view('admin.precios.precios')->with(compact('products','texto'));
     }
 

@@ -13,7 +13,7 @@ class Sector extends Model
         return $this->hasMany(Product::class);
     }
     //$sector->categories
-    public function sectors(){
+    public function categories(){
 
         return $this->hasMany(Category::class);
     }

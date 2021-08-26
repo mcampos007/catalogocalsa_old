@@ -15,7 +15,7 @@ class Category extends Model
     //$category->sector
     public function sector(){
 
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Sector::class);
     }
 
     public function getFeaturedImageUrlAttribute()
