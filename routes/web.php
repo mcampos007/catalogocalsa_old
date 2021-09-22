@@ -38,13 +38,68 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
+	// Módulo de Cajas
+	Route::get('/cajas','CajaController@index');				//Caja Nueva
+	Route::get('/cajas/create','CajaController@create');		// Form de alta de Cajas
+	Route::post('/cajas','CajaController@store');				// Alta de la Caja
+	Route::get('/cajas/{id}/cerrar','CajaController@formcerrar');		//Form de Cierre de Caja
+	Route::post('/cajas/cerrar','CajaController@cerrar');		// Cierre de Caja
+
+	Route::get('/cajascerradas','CajaController@indexcerradas');		//Listado de Cajas Cerradas
+	
+	// Arqueos
+	Route::get('/cajas/{id}/arqueo','CajaController@arqueo');	// Form para registro de Arqueo
+	Route::post('/cajas/arqueo','CajaController@storearqueo');	// Alta de Arqueo
+
+	// Egresos
+	Route::get('/cajas/{id}/egreso','CajaController@egreso');				// Listado de Egresos
+	Route::get('/cajas/{id}/egresocreate','CajaController@egresocreate');	// Form de Egresos
+	Route::post('/cajas/egreso','CajaController@storeegreso');				// Alta de Egreso
+	Route::get('/cajas/egreso/{id}/edit','CajaController@editegreso');		// Edición de Egreso
+	Route::post('/cajas/egreso/edit','CajaController@egresoupdate');		// Actualización del Egreso
+	Route::delete('/cajas/egreso/{id}','CajaController@egresodestroy');		// Eliminación de un Egreso
+
+	// Cheques
+	Route::get('/cajas/{id}/cheque','CajaController@cheque');				// Listado de cheques
+	Route::get('/cajas/{id}/chequecreate','CajaController@chequecreate');	// Form de cheques
+	Route::post('/cajas/cheque','CajaController@storecheque');				// Alta de cheque
+	Route::get('/cajas/cheque/{id}/edit','CajaController@editcheque');		// Edición de cheque
+	Route::post('/cajas/cheque/edit','CajaController@chequeupdate');		// Actualización del cheque
+	Route::delete('/cajas/cheque/{id}','CajaController@chequedestroy');		// Eliminación de un cheque
+
+	// Tarjetas
+	Route::get('/cajas/{id}/tarjeta','CajaController@tarjeta');				// Listado de tarjetas
+	Route::get('/cajas/{id}/tarjetacreate','CajaController@tarjetacreate');	// Form de tarjetas
+	Route::post('/cajas/tarjeta','CajaController@storetarjeta');				// Alta de tarjeta
+	Route::get('/cajas/tarjeta/{id}/edit','CajaController@edittarjeta');		// Edición de tarjeta
+	Route::post('/cajas/tarjeta/edit','CajaController@tarjetaupdate');		// Actualización del tarjeta
+	Route::delete('/cajas/tarjeta/{id}','CajaController@tarjetadestroy');		// Eliminación de un tarjeta
+
+	// Otro MP
+	Route::get('/cajas/{id}/otrafp','CajaController@otrafp');				// Listado de otrafps
+	Route::get('/cajas/{id}/otrafpcreate','CajaController@otrafpcreate');	// Form de otrafps
+	Route::post('/cajas/otrafp','CajaController@storeotrafp');				// Alta de otrafp
+	Route::get('/cajas/otrafp/{id}/edit','CajaController@editotrafp');		// Edición de otrafp
+	Route::post('/cajas/otrafp/edit','CajaController@otrafpupdate');		// Actualización del otrafp
+	Route::delete('/cajas/otrafp/{id}','CajaController@otrafpdestroy');		// Eliminación de un otrafp
+
+	//
+
 	// Definicion de los sectores
-	Route::get('/sectors','SectorController@index');			//Listado de Sectores
-	Route::get('/sectors/create','SectorController@create');	// Form de alta de Secores
-	Route::post('/sectors','SectorController@store');			// Alta del Sector
-	Route::get('/sectors/{id}/edit','SectorController@edit');	// fmr para Edit
-	Route::post('/sectors/{id}/edit','SectorController@update');// Actualización del Sector
-	Route::delete('/sectors/{id}','SectorController@destroy');
+	Route::get('/sectors','SectorController@index');				//Listado de Sectores
+	Route::get('/sectors/create','SectorController@create');		// Form de alta de Secores
+	Route::post('/sectors','SectorController@store');				// Alta del Sector
+	Route::get('/sectors/{id}/edit','SectorController@edit');		// fmr para Edit
+	Route::post('/sectors/{id}/edit','SectorController@update');	// Actualización del Sector
+	Route::delete('/sectors/{id}','SectorController@destroy');		// Eliminación de un Sector
+
+	// Definicion de los Puntos de Ventas
+	Route::get('/puntodeventa','PuntodeventaController@index');				//Listado de PUntodeventaes
+	Route::get('/puntodeventa/create','PuntodeventaController@create');		// Form de alta de PUntodeventaes
+	Route::post('/puntodeventa','PuntodeventaController@store');				// Alta del PUntodeventa
+	Route::get('/puntodeventa/{id}/edit','PuntodeventaController@edit');		// fmr para Edit
+	Route::post('/puntodeventa/{id}/edit','PuntodeventaController@update');	// Actualización del PUntodeventa
+	Route::delete('/puntodeventa/{id}','PuntodeventaController@destroy');		// Eliminación de un Sector
 
 	//Precios protegido
 	Route::get('/precios','PrecioController@index');
@@ -60,7 +115,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 
 	Route::delete('/products/{id}','ProductController@destroy');
 
-	Route::get('/products/{id}/images','ImageController@index');  //Listado de Imágenes
+	Route::get('/products/{id}/images','ImageController@index');  	//Listado de Imágenes
 	Route::post('/products/{id}/images','ImageController@store');
 	Route::delete('/products/{id}/images','ImageController@destroy');	
 	Route::get('/products/{id}/images/select/{image}','ImageController@select');
@@ -98,14 +153,14 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 
 
 	//Clientes
-	Route::get('/clients','ClientController@index');		// Listado de clienteas
-	Route::get('/clients/create','ClientController@create');	// Form de Alta de clientes
-	Route::post('/clients','ClientController@store');			// Rergistro del cliete en la BD
+	Route::get('/clients','ClientController@index');				// Listado de clienteas
+	Route::get('/clients/create','ClientController@create');		// Form de Alta de clientes
+	Route::post('/clients','ClientController@store');				// Rergistro del cliete en la BD
 
 	Route::get('/clients/{id}/edit', 'ClientController@edit');		//Form de Edicion del cliente
-	Route::post('/clients/{id}/edit','ClientController@update');  // Actualización de la bd
+	Route::post('/clients/{id}/edit','ClientController@update');  	// Actualización de la bd
 
-	Route::delete('/clients/{id}','ClientController@destroy');  // eliminar un cliente
+	Route::delete('/clients/{id}','ClientController@destroy');  	// eliminar un cliente
 
 	//Remitos
 	Route::get('/remito/{id}','CartController@vercart');						//Ver Contenido del Remito
@@ -120,10 +175,19 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::get('/pagos','PaymentController@index');								//Listado de Clientes para Pagos
 	Route::get('/pagos/{id}/nuevopago','PaymentController@nuevopago');			//Formulario de Pagos
 	Route::post('/pagos','PaymentController@store');							// Rergistro del pago en la BD
-
-	//Pedidos
-	//Parte Admin
-	Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
-
-
 });
+//Pedidos
+//Parte Admin
+Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
+
+Route::middleware(['auth', 'usuario'])->namespace('Usuario')->group(function () {
+    Route::get('/schedule','ScheduleController@edit');
+    Route::post('/schedule','ScheduleController@store');
+});
+
+Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {
+    Route::get('/schedule','ScheduleController@edit');
+    Route::post('/schedule','ScheduleController@store');
+});
+
+

@@ -26,6 +26,9 @@ class CreateCartDetailsTable extends Migration
 
             $table->float('quantity');
             $table->integer('discount')->default(0);
+
+            //precio_del item al confirmar
+            $table->float('price')->nullable();
             
             $table->timestamps();
         });

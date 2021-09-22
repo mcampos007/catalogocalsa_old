@@ -18,19 +18,22 @@ class UsersTableSeeder extends Seeder
         	'name' => 'mario',
             'email'=> 'mcampos.infocam@gmail.com',
             'password' => bcrypt('123123'),
-            'admin' => true
+            'admin' => true,
+            'role' => 'admin'
         ]);
 
         User::create([
         	'name' => 'cesar',
             'email'=> 'cesar.campos@infocam.com.ar',
-            'password' => bcrypt('321321')
+            'password' => bcrypt('321321'),
+            'role' => 'usuario'
         ]);
         User::create([
             'name' => 'ventasonline',
             'email'=> 'ventasonline@grupocisterna.com.ar',
             'password' => bcrypt('20092020'),
-            'admin' => true
+            'role' => 'client'
+            
         ]);
     }
 }

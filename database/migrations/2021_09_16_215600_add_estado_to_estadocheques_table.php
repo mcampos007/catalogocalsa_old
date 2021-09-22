@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Estadocheque;
 
-class AddCondescuentoToProducts extends Migration
+class AddEstadoToEstadochequesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,9 @@ class AddCondescuentoToProducts extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('products', function($table) {
-        $table->float('con_descuento')->nullable();
+        Schema::table('estadocheques', function (Blueprint $table) {
+            $table->string('estado');
         });
-
     }
 
     /**
@@ -27,9 +26,8 @@ class AddCondescuentoToProducts extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('products', function($table) {
-        $table->dropColumn('con_descuento');
+        Schema::table('cheques', function (Blueprint $table) {
+            $table->dropColumn('estado');
         });
     }
 }

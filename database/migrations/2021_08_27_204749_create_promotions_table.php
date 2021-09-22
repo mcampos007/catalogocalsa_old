@@ -21,8 +21,8 @@ class CreatePromotionsTable extends Migration
             $table->text('long_description')->nullable();
             $table->float('price');
             //fk
-     //       $table->integer('category_id')->unsigned()->nullable();
-       //     $table->foreign('category_id')->references('id')->on('categories');
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

@@ -14,14 +14,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
     <!-- CSS Files -->
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href=" {{ asset('css/material-kit.css')}}" rel="stylesheet"/>
-
-
-
-
     @yield('styles')
 </head>
 
@@ -51,61 +48,22 @@
 
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
-                    @guest
-                        
+                    @guest      
                         <li><a href="{{ route('login') }}">Ingresar</a></li>
                         <li><a href="{{ route('register') }}">Registro</a></li>
                         <li><a href="{{ url('/precios') }}">Lista de Precios</a></li>
                        <!-- <li><a href="#">Registro</a></li> -->
                     @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ url('/home')}}">Ver Mis Pedidos</a>
-                                </li>
-                                @if (auth()->user()->admin)
-                                <li>
-                                    <a href="{{ url('/admin/precios') }}">Lista de Precios Calsa</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/preciosf') }}">Lista de Precios Fiambres</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/products')}}">Gestionar Productos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/promotions')}}">Gestionar Promociones</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/categories')}}">Gestionar Categorias</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/clients')}}">Gestionar Clientes</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/pagos')}}">Gestionar Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/sectors')}}">Gestionar Sectores</a>
-                                </li>
-                                @endif
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Desconectarse
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->role == 'admin')
+                            @include('menus.menuadmin')
+                        @endif
+                        @if (auth()->user()->role == 'client')
+                            @include('menus.menuclient')
+                        @endif
+                        @if (auth()->user()->role == 'usuario')
+                            @include('menus.menuusuario')
+                        @endif 
+                                
                     @endguest
                     <!-- <li>
                         <a href="https://twitter.com/CreativeTim" target="_blank" class="btn btn-simple btn-white btn-just-icon">

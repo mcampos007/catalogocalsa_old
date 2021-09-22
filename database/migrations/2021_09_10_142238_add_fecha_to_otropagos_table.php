@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Otropago;
 
-class AddFieldsCartdetails extends Migration
+class AddFechaToOtropagosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,8 @@ class AddFieldsCartdetails extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('cart_details', function (Blueprint $table) {
-            //
-            //precio_del item al confirmar
-            $table->float('price')->nullable();
+        Schema::table('otropagos', function (Blueprint $table) {
+            $table->date('fecha');
         });
     }
 
@@ -28,6 +26,8 @@ class AddFieldsCartdetails extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('otropagos', function (Blueprint $table) {
+            $table->dropColumn('fecha');
+        });
     }
 }

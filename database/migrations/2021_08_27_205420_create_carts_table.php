@@ -24,6 +24,10 @@ class CreateCartsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
+            //fk
+            $table->integer('client_id')->unsigned()->nullable();
+            $table->foreign('client_id')->references('id')->on('clients');
+
 
             $table->timestamps();
         });

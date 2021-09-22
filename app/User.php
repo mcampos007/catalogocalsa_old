@@ -28,9 +28,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //$user->cajas
+    public function cajas(){
+        return $this->hasMany(Caja::class);
+    }
+    
+    //
     public function carts(){
         return $this->hasMany(Cart::class);
     }
+
     //
     public function getCartAttribute(){
 

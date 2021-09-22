@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
- 
-class AddFieldsToProduct extends Migration
+
+class CreateTipomovimientosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class AddFieldsToProduct extends Migration
      */
     public function up()
     {
-        //
-         Schema::table('products', function (Blueprint $table) {
-            //
-            //precio_del item al confirmar
-            $table->string('nro_art')->nullable();
+        Schema::create('tipomovimientos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +27,6 @@ class AddFieldsToProduct extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tipomovimientos');
     }
 }

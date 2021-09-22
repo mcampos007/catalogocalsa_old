@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldsToCarts extends Migration
+class AddLotefieldToTarjetasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class AddFieldsToCarts extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('carts', function (Blueprint $table) {
-            //
-            //fk
-            $table->integer('client_id')->unsigned()->nullable();
-            $table->foreign('client_id')->references('id')->on('clients');
+        Schema::table('tarjetas', function (Blueprint $table) {
+            $table->Integer('terminal_number');
+            $table->Integer('lote_number');
         });
     }
 
@@ -29,6 +26,8 @@ class AddFieldsToCarts extends Migration
      */
     public function down()
     {
-        //
+       Schema::table('tarjetas', function (Blueprint $table) {
+            $table->dropColumn(['terminal_number', 'lote_number']);
+        });
     }
 }
