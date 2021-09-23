@@ -6,7 +6,7 @@
         <li>
             <a href="{{ url('/home')}}">Ver Mis Pedidos</a>
         </li>
-        <li>
+        {{-- <li>
             <a href="{{ url('/admin/precios') }}">Lista de Precios Calsa</a>
         </li>
         <li>
@@ -29,7 +29,7 @@
         </li>
         <li>
             <a href="{{ url('/admin/sectors')}}">Gestionar Sectores</a>
-        </li>
+        </li> --}}
         <li>
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault();
