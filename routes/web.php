@@ -184,10 +184,11 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 //Parte Admin
 Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
 
-/*Route::middleware(['auth', 'usuario'])->namespace('Usuario')->group(function () {
-    Route::get('/schedule','ScheduleController@edit');
-    Route::post('/schedule','ScheduleController@store');
-});*/
+Route::middleware(['auth', 'usuario'])->prefix('usuario')->namespace('Admin')->group(function () {
+    //Precios protegido
+	Route::get('/precios','PrecioController@index');
+	Route::get('/preciosf','PrecioController@indexf');
+});
 
 /*Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {
     Route::get('/schedule','ScheduleController@edit');
