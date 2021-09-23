@@ -83,7 +83,7 @@
         <div class="container">
             <div class="row">
             <div class="col-x1-12">
-                <form action="{{route('precios.index')}}" method="GET">  
+                <form action="{{url('preciosf')}}" method="GET">  
                     <div class="form-row">
                         <div class="col-sm-4 my-1">
                             <input type="text" name="texto" class="form-control" value="{{$texto}}">

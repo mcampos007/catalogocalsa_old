@@ -699,7 +699,7 @@ class CajaController extends Controller
 
         $caja = Caja::find($id);
         $caja->status = "Cerrada";
-        $caja->save();
+       // $caja->save();
         return redirect('/admin/cajas');
 
     }

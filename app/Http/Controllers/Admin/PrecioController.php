@@ -60,7 +60,7 @@ class PrecioController extends Controller
            
         }
        
-        return view('search.showprices')->with(compact('products','query'));
+        return view('search.productosfiltrados')->with(compact('products','query'));
 
     }
    

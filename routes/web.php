@@ -15,8 +15,12 @@ Route::get('/', 'TestController@welcome');
 
 /*Route::get('/precios','PrecioController@index');
 Route::post('/searchprecios','PrecioController@show');
-Route::get('/precios/json', 'PrecioController@data');*/
-Route::resource('/precios',PrecioController::class);
+Route::get('/precios/json', 'PrecioController@data');
+Route::resource('/precios',PrecioController::class);*/
+
+Route::get('/precios','PrecioController@index');
+Route::get('/preciosf','PrecioController@indexf');
+
 
 Route::get('/search', 'SearchController@show');
 Route::get('/products/json', 'SearchController@data');
@@ -45,7 +49,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::get('/cajas/{id}/cerrar','CajaController@formcerrar');		//Form de Cierre de Caja
 	Route::post('/cajas/cerrar','CajaController@cerrar');		// Cierre de Caja
 
-	Route::get('/cajascerradas','CajaController@indexcerradas');		//Listado de Cajas Cerradas
+	Route::get('/cajascerradas','CajaController@indexc');		//Listado de Cajas Cerradas
 	
 	// Arqueos
 	Route::get('/cajas/{id}/arqueo','CajaController@arqueo');	// Form para registro de Arqueo
@@ -180,14 +184,14 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 //Parte Admin
 Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
 
-Route::middleware(['auth', 'usuario'])->namespace('Usuario')->group(function () {
+/*Route::middleware(['auth', 'usuario'])->namespace('Usuario')->group(function () {
     Route::get('/schedule','ScheduleController@edit');
     Route::post('/schedule','ScheduleController@store');
-});
+});*/
 
-Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {
+/*Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {
     Route::get('/schedule','ScheduleController@edit');
     Route::post('/schedule','ScheduleController@store');
-});
+});*/
 
 
