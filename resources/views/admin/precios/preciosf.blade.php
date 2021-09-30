@@ -119,13 +119,13 @@
                         {{ $product->name}}
                       </td>
                       <td scope="row">
-                        {{ $product->price}}
+                        {{ $product->price * $recargo}}
                       </td>
                       <td scope="row">
                         {{ $product->topedesc}}
                       </td>
                       <td scope="row">
-                        {{ $product->con_descuento}}
+                        {{ $product->con_descuento * $recargo}}
                       </td>
                     </tr>
                     @endforeach
