@@ -43,6 +43,11 @@
                         <label class="control-label">E-mail</label>
                         <input type="email" class="form-control" name="email" value="{{ old('email')}}">
                 </div>
+
+                <div class="form-group label-floating">
+                        <label class="control-label">C.U.I.T.</label>
+                        <input type="text" class="form-control" name="cuit" value="{{ old('cuit')}}">
+                </div>
                  
                         
                 </div>

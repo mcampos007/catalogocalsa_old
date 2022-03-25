@@ -36,8 +36,8 @@
             <form method="post" action="{{ url('/admin/cajas/cerrar')}}">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="id" value="{{$caja->id}}">
-                <button type="submit" rel="tooltip" title="Cerrar" class="btn btn-primary btn-round">
-                    CERRAR
+                <button type="submit" rel="tooltip" title="Imprimir" class="btn btn-primary btn-round">
+                    Imprimir
                 </button>
                 <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
             </form > 

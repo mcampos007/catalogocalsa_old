@@ -31,7 +31,7 @@ class PrecioController extends Controller
     public function indexf(Request $request){
         $texto = trim($request->input('texto'));
         //dd($texto);
-        $recargo = auth()->user()->recargo;
+        $recargo = 1; //auth()->user()->recargo;
         $products = DB::table('products')
             ->select('id','name','price','nro_art','topedesc','con_descuento')
             ->where('name','LIKE','%'.$texto.'%')

@@ -77,7 +77,7 @@
                 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-primary">Registrar Categoria</button>
+                        <button type="submit" class="btn btn-primary">Registrar Caja</button>
                          <a href=" {{ url('/admin/cajas')}}" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>

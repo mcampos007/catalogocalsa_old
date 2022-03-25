@@ -187,6 +187,8 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.egreso')->with(compact('caja','gastos','t'));
     }
+
+    
     // form para alta de Egreso
     public function egresocreate($id)
     {
@@ -194,6 +196,8 @@ class CajaController extends Controller
 
         return view('admin.cajas.egresocreate')->with(compact('caja'));
     }
+
+
     //Registro del Egreso en la BD
     public function storeegreso(Request $request)
     {
@@ -225,6 +229,8 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.egreso')->with(compact('caja','gastos','t'));
     }
+
+
     //form para edicion del egreso
     public function editegreso($id)
     {
@@ -232,6 +238,7 @@ class CajaController extends Controller
         $gasto = Gasto::find($id);
         return view('admin.cajas.editegreso')->with(compact('gasto'));
     }
+
     //actualizacion del egreso en la Bd
     public function egresoupdate(Request $request)
     {
@@ -250,6 +257,8 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.egreso')->with(compact('caja','gastos','t'));
     }
+
+
     //Eliminación del Egreso
     public function egresodestroy($id)
     {
@@ -362,6 +371,8 @@ class CajaController extends Controller
         //dd($cheque);
         return view('admin.cajas.editcheque')->with(compact('cheque','clients','bancos'));
     }
+
+
     //actualizacion del Cheque en la Bd
     public function chequeupdate(Request $request)
     {
@@ -389,6 +400,8 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.cheque')->with(compact('caja','cheques','t'));
     }
+
+
     //Eliminación del Egreso
     public function chequedestroy($id)
     {
@@ -486,6 +499,8 @@ class CajaController extends Controller
         //dd($cheque);
         return view('admin.cajas.edittarjeta')->with(compact('tarjeta'));
     }
+
+
     //actualizacion del Cheque en la Bd
     public function tarjetaupdate(Request $request)
     {
@@ -509,6 +524,7 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.tarjeta')->with(compact('caja','tarjetas','t'));
     }
+
     //Eliminación del Egreso
     public function tarjetadestroy($id)
     {
@@ -609,6 +625,7 @@ class CajaController extends Controller
         //dd($cheque);
         return view('admin.cajas.editotropago')->with(compact('otropago','clients','tipomovimientos'));
     }
+
     //actualizacion del otro fp en la Bd
     public function otrafpupdate(Request $request)
     {
@@ -633,6 +650,7 @@ class CajaController extends Controller
         //dd($t);
         return view('admin.cajas.otropago')->with(compact('caja','otropagos','t'));
     }
+
     //Eliminación del Egreso
     public function otrafpdestroy($id)
     {
@@ -675,6 +693,13 @@ class CajaController extends Controller
         foreach($cheques as $g){
             $sumcheques += $g->importe;
         }
+
+        $tarjetas = Tarjeta::where('cajas_id',$caja->id)->get();
+        $sumtarjetas = 0;
+        foreach($tarjetas as $g){
+            $sumtarjetas += $g->importe;
+        }
+        // dd($tarjetas);
         //dd($sumgasto);
         $totbillete = 0.00;
         $totbillete += $caja->efectivo->billete1000 * 1000;
@@ -689,7 +714,8 @@ class CajaController extends Controller
             'caja','totbillete',
             'gastos','sumgasto',
             'otrosfp','sumotrosfp',
-            'cheques','sumcheques'
+            'cheques','sumcheques',
+            'tarjetas','sumtarjetas'
             ));
 
     }
@@ -699,8 +725,55 @@ class CajaController extends Controller
 
         $caja = Caja::find($id);
         $caja->status = "Cerrada";
-       // $caja->save();
+        $caja->save();
         return redirect('/admin/cajas');
+
+    }
+    // Imprimir Caja Cerrada
+    public function imprimir($id){
+        $caja = Caja::find($id);
+        
+        $gastos = Gasto::where('cajas_id',$caja->id)->get();
+        $sumgasto = 0;
+        foreach($gastos as $g){
+            $sumgasto += $g->importe;
+        }
+
+        $otrosfp = Otropago::where('cajas_id',$caja->id)->get();
+        $sumotrosfp = 0;
+        foreach($otrosfp as $g){
+            $sumotrosfp += $g->importe;
+        }
+
+        $cheques = Cheque::where('cajas_id',$caja->id)->get();
+        $sumcheques = 0;
+        foreach($cheques as $g){
+            $sumcheques += $g->importe;
+        }
+
+        $tarjetas = Tarjeta::where('cajas_id',$caja->id)->get();
+        $sumtarjetas = 0;
+        foreach($tarjetas as $g){
+            $sumtarjetas += $g->importe;
+        }
+        // dd($tarjetas);
+        //dd($sumgasto);
+        $totbillete = 0.00;
+        $totbillete += $caja->efectivo->billete1000 * 1000;
+        $totbillete += $caja->efectivo->billete500 * 500;
+        $totbillete += $caja->efectivo->billete200 * 200;
+        $totbillete += $caja->efectivo->billete100 * 100;
+        $totbillete += $caja->efectivo->billete50 * 50;
+        $totbillete += $caja->efectivo->billete20 * 20;
+        $totbillete += $caja->efectivo->billete10 * 10;
+       // dd($caja->gastos());
+        return view('admin.cajas.imprime')->with(compact(
+            'caja','totbillete',
+            'gastos','sumgasto',
+            'otrosfp','sumotrosfp',
+            'cheques','sumcheques',
+            'tarjetas','sumtarjetas'
+            ));
 
     }
 }

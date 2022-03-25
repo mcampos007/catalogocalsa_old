@@ -38,6 +38,10 @@
                 <td class="col-md-2 text-right">{{$totbillete}}</td>    
             </tr>
             <tr>
+                <td class="col-md-2 text-center">TOTAL TARJETAS</td>
+                <td class="col-md-2 text-right">{{$sumtarjetas}}</td>    
+            </tr>
+            <tr>
                 <td class="col-md-2 text-center">TOTAL CHEQUES</td>
                 <td class="col-md-2 text-right">{{$sumcheques}}</td>    
             </tr>

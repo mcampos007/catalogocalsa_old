@@ -58,6 +58,7 @@ class ClientController extends Controller
         $client->name = $request->input('name');
         $client->direccion = $request->input('direccion');
         $client->email = $request->input('email');
+        $client->cuit = $request->input('cuit');
         $client->save();
         return redirect('/admin/clients');
     }

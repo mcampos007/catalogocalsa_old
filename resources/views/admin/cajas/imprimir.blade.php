@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Listado de Cajas')
+@section('title','Imprimir Caja')
 
 @section('body-class','product-page')
 
@@ -41,7 +41,8 @@
                 </button>
                 <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
             </form > 
-            </div>        
+            </div>
+            
         </div>
 
     </div>

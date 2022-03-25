@@ -43,13 +43,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
 	// Módulo de Cajas
-	Route::get('/cajas','CajaController@index');				//Caja Nueva
-	Route::get('/cajas/create','CajaController@create');		// Form de alta de Cajas
-	Route::post('/cajas','CajaController@store');				// Alta de la Caja
-	Route::get('/cajas/{id}/cerrar','CajaController@formcerrar');		//Form de Cierre de Caja
-	Route::post('/cajas/cerrar','CajaController@cerrar');		// Cierre de Caja
+	Route::get('/cajas','CajaController@index');					// Caja Nueva
+	Route::get('/cajas/create','CajaController@create');			// Form de alta de Cajas
+	Route::post('/cajas','CajaController@store');					// Alta de la Caja
+	Route::get('/cajas/{id}/cerrar','CajaController@formcerrar');	// Form de Cierre de Caja
+	Route::post('/cajas/cerrar','CajaController@cerrar');			// Cierre de Caja
+	Route::post('/cajas/{id}/imprimir','CajaController@imprimir');	// IMprimir Caja Cerrada
 
-	Route::get('/cajascerradas','CajaController@indexc');		//Listado de Cajas Cerradas
+	Route::get('/cajascerradas','CajaController@indexcerradas');			// Listado de Cajas Cerradas
 	
 	// Arqueos
 	Route::get('/cajas/{id}/arqueo','CajaController@arqueo');	// Form para registro de Arqueo
