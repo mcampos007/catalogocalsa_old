@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone', 'address', 'username'
+        'name', 'email', 'password','phone', 'address', 'username','recargo'
     ];
 
     /**
@@ -46,11 +46,11 @@ class User extends Authenticatable
         if ($cart)
             return $cart;
         //else
-            $cart = new Cart();
-            $cart->status ='Active';
-            $cart->user_id = $this->id;
-            $cart->save();
+        $cart = new Cart();
+        $cart->status ='Active';
+        $cart->user_id = $this->id;
+        $cart->save();
 
-            return $cart->id;
+        return $cart->id;
     }
 }

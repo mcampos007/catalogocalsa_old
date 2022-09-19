@@ -13,6 +13,9 @@ l<?php
 
 Route::get('/', 'TestController@welcome');
 
+
+
+
 /*Route::get('/precios','PrecioController@index');
 Route::post('/searchprecios','PrecioController@show');
 Route::get('/precios/json', 'PrecioController@data');
@@ -28,12 +31,14 @@ Route::get('/products/json', 'SearchController@data');
 Route::get('/products/{id}', 'ProductController@show');
 Route::get('/categories/{category}', 'CategoryController@show');
 
+//Detalle de Pedidos en General
+Route::post('/cart', 'CartDetailController@store');	
+Route::delete('/cart','CartDetailController@destroy');  //eliminar Pedido
+Route::get('/cart/{id}','CartDetailController@edit');
 
-Route::post('/cart', 'CartDetailController@store');
-Route::delete('/cart','CartDetailController@destroy');
 
 
-Route::post('/order','CartController@update');
+Route::post('/order','CartController@update');		//Cerrar Pedido 
 Route::post('/feedback','FeedbackController@update');
 
 Auth::routes();
@@ -42,7 +47,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
-	// Módulo de Cajas
+// Módulo de Cajas
 	Route::get('/cajas','CajaController@index');					// Caja Nueva
 	Route::get('/cajas/create','CajaController@create');			// Form de alta de Cajas
 	Route::post('/cajas','CajaController@store');					// Alta de la Caja
@@ -52,11 +57,11 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 
 	Route::get('/cajascerradas','CajaController@indexcerradas');			// Listado de Cajas Cerradas
 	
-	// Arqueos
+// Arqueos
 	Route::get('/cajas/{id}/arqueo','CajaController@arqueo');	// Form para registro de Arqueo
 	Route::post('/cajas/arqueo','CajaController@storearqueo');	// Alta de Arqueo
 
-	// Egresos
+// Egresos
 	Route::get('/cajas/{id}/egreso','CajaController@egreso');				// Listado de Egresos
 	Route::get('/cajas/{id}/egresocreate','CajaController@egresocreate');	// Form de Egresos
 	Route::post('/cajas/egreso','CajaController@storeegreso');				// Alta de Egreso
@@ -64,7 +69,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/cajas/egreso/edit','CajaController@egresoupdate');		// Actualización del Egreso
 	Route::delete('/cajas/egreso/{id}','CajaController@egresodestroy');		// Eliminación de un Egreso
 
-	// Cheques
+// Cheques
 	Route::get('/cajas/{id}/cheque','CajaController@cheque');				// Listado de cheques
 	Route::get('/cajas/{id}/chequecreate','CajaController@chequecreate');	// Form de cheques
 	Route::post('/cajas/cheque','CajaController@storecheque');				// Alta de cheque
@@ -72,7 +77,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/cajas/cheque/edit','CajaController@chequeupdate');		// Actualización del cheque
 	Route::delete('/cajas/cheque/{id}','CajaController@chequedestroy');		// Eliminación de un cheque
 
-	// Tarjetas
+// Tarjetas
 	Route::get('/cajas/{id}/tarjeta','CajaController@tarjeta');				// Listado de tarjetas
 	Route::get('/cajas/{id}/tarjetacreate','CajaController@tarjetacreate');	// Form de tarjetas
 	Route::post('/cajas/tarjeta','CajaController@storetarjeta');				// Alta de tarjeta
@@ -80,7 +85,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/cajas/tarjeta/edit','CajaController@tarjetaupdate');		// Actualización del tarjeta
 	Route::delete('/cajas/tarjeta/{id}','CajaController@tarjetadestroy');		// Eliminación de un tarjeta
 
-	// Otro MP
+// Otro MP
 	Route::get('/cajas/{id}/otrafp','CajaController@otrafp');				// Listado de otrafps
 	Route::get('/cajas/{id}/otrafpcreate','CajaController@otrafpcreate');	// Form de otrafps
 	Route::post('/cajas/otrafp','CajaController@storeotrafp');				// Alta de otrafp
@@ -88,9 +93,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/cajas/otrafp/edit','CajaController@otrafpupdate');		// Actualización del otrafp
 	Route::delete('/cajas/otrafp/{id}','CajaController@otrafpdestroy');		// Eliminación de un otrafp
 
-	//
-
-	// Definicion de los sectores
+// Definicion de los sectores
 	Route::get('/sectors','SectorController@index');				//Listado de Sectores
 	Route::get('/sectors/create','SectorController@create');		// Form de alta de Secores
 	Route::post('/sectors','SectorController@store');				// Alta del Sector
@@ -98,7 +101,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/sectors/{id}/edit','SectorController@update');	// Actualización del Sector
 	Route::delete('/sectors/{id}','SectorController@destroy');		// Eliminación de un Sector
 
-	// Definicion de los Puntos de Ventas
+// Definicion de los Puntos de Ventas
 	Route::get('/puntodeventa','PuntodeventaController@index');				//Listado de PUntodeventaes
 	Route::get('/puntodeventa/create','PuntodeventaController@create');		// Form de alta de PUntodeventaes
 	Route::post('/puntodeventa','PuntodeventaController@store');				// Alta del PUntodeventa
@@ -106,11 +109,11 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/puntodeventa/{id}/edit','PuntodeventaController@update');	// Actualización del PUntodeventa
 	Route::delete('/puntodeventa/{id}','PuntodeventaController@destroy');		// Eliminación de un Sector
 
-	//Precios protegido
+//Precios protegido
 	Route::get('/precios','PrecioController@index');
 	Route::get('/preciosf','PrecioController@indexf');
 
-	//Productos 
+//Productos 
 	Route::get('/products','ProductController@index');
 	Route::get('/products/create','ProductController@create');
 	Route::post('/products','ProductController@store');
@@ -125,7 +128,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::delete('/products/{id}/images','ImageController@destroy');	
 	Route::get('/products/{id}/images/select/{image}','ImageController@select');
 
-	//Promociones
+//Promociones
 	Route::get('/promotions','PromotionController@index');
 	Route::get('/promotions/create','PromotionController@create');
 	Route::post('/promotions','PromotionController@store');
@@ -134,13 +137,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::post('/promotions/{id}/edit','PromotionController@update');
 
 	Route::delete('/promotions/{id}','PromotionController@destroy');
-
+/*
 	Route::get('/promotions/{id}/images','PromoImageController@index');  //Listado de Imágenes
 	Route::post('/promotions/{id}/images','PromoImageController@store');
 	Route::delete('/promotions/{id}/images','PromoImageController@destroy');	
 	Route::get('/promotions/{id}/images/select/{image}','PromoImageController@select');
-
-	//Categorias
+*/
+//Categorias
 
 	Route::get('/categories','CategoryController@index');
 	Route::get('/categories/create','CategoryController@create');
@@ -157,7 +160,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 	Route::get('/categories/{id}/images/select/{image}','CategoryImageController@select');
 
 
-	//Clientes
+//Clientes
 	Route::get('/clients','ClientController@index');				// Listado de clienteas
 	Route::get('/clients/create','ClientController@create');		// Form de Alta de clientes
 	Route::post('/clients','ClientController@store');				// Rergistro del cliete en la BD
@@ -167,28 +170,38 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
 
 	Route::delete('/clients/{id}','ClientController@destroy');  	// eliminar un cliente
 
-	//Remitos
+//Remitos
 	Route::get('/remito/{id}','CartController@vercart');						//Ver Contenido del Remito
 	Route::get('/remito/{id}/edit', 'CartController@edit');						//Form de Edicion del Remito
-	Route::get('/remito/{id}/facturar', 'CartController@facturarremito');		//Form de Facturacion del Remito
+	Route::get('/remito/{id}/facturar', 'CartController@facturarremito');		//Form de Facturacion del 
+	Route::get('/remito/edititem/{id}','CartDetailController@editaritem');		//Editar Item del 	Remito
+	Route::post('/remito/item', 'CartDetailController@update');					//Actualizar Item
+	Route::delete('/remito', 'CartController@destroy');					//eliminar el Pedido
+
 	Route::post('/remito/facturar', 'CartController@update');					//Confirmar Facturar Remito
 
 	Route::get('/remito/{id}/excel', 'CartController@excel');					//Enviar el Rmito a Excel
 	Route::get('/remito/{id}/remitopdf', 'CartController@remitopdf');			//Enviar el Rmito a Pdf
 
-	//Pagos
+//Pagos
 	Route::get('/pagos','PaymentController@index');								//Listado de Clientes para Pagos
 	Route::get('/pagos/{id}/nuevopago','PaymentController@nuevopago');			//Formulario de Pagos
 	Route::post('/pagos','PaymentController@store');							// Rergistro del pago en la BD
 });
-//Pedidos
+
 //Parte Admin
 Route::get('/orders/{id}','CartController@vercart');						//Ver Contenido del Remito
 
 Route::middleware(['auth', 'usuario'])->prefix('usuario')->namespace('Admin')->group(function () {
     //Precios protegido
 	Route::get('/precios','PrecioController@index');
-	Route::get('/preciosf','PrecioController@indexf');
+	Route::get('/remito/{id}','PrecioController@verremito');				//Ver Contenido del Remito
+	Route::get('/preciosf','PrecioController@indexf');						
+	Route::get('/agregaitemalpedido/{id}', 'PrecioController@agregaitem');
+	Route::post('/cart','PrecioController@store');
+	Route::delete('/cart','PrecioController@destroy');		//Eliminar un Pedido 
+	Route::post('/cart/edit','PrecioController@update');	//Actualizar datos del Item
+	Route::get('/editaitemdelpedido/{id}', 'PrecioController@editaitem');	// Editar Item del Pedido
 });
 
 /*Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {

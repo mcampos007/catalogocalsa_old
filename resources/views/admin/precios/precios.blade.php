@@ -82,64 +82,70 @@
     <div class="profile-content">
         <div class="container">
             <div class="row">
-            <div class="col-x1-12">
-                <form action="{{url('precios')}}" method="GET">  
-                    <div class="form-row">
-                        <div class="col-sm-4 my-1">
-                            <input type="text" name="texto" class="form-control" value="{{$texto}}">
+                <div class="col-x1-12">
+                    <form action="{{url('precios')}}" method="GET">  
+                        <div class="form-row">
+                            <div class="col-sm-4 my-1">
+                                <input type="text" name="texto" class="form-control" value="{{$texto}}">
+                            </div>
+                            <div class="col-auto my-1">
+                                <input type="submit" class="btn btn-primary" value="Buscar">
+                            </div>
                         </div>
-                        <div class="col-auto my-1">
-                            <input type="submit" class="btn btn-primary" value="Buscar">
-                        </div>
+                    </form>
+                </div>
+                <div class="col-x1-12">
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Id</th>
+                          <th scope="col">Código</th>
+                          <th scope="col">Artículo</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Descuento Max</th>
+                          <th scope="col">Precio c/Descuento</th>
+                          <th scope="col">Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($products as $product)
+                        <tr>
+                          <td scope="row">
+                            {{ $product->id}}
+                          </td>
+                          <td scope="row">
+                            {{ $product->nro_art}}
+                          </td>
+                          <td scope="row">
+                            {{ $product->name}}
+                          </td>
+                          <td scope="row">
+                            {{ $product->price * $recargo}}
+                          </td>
+                          <td scope="row">
+                            {{ $product->topedesc}}
+                          </td>
+                          <td scope="row">
+                            {{ $product->con_descuento * $recargo}}
+                          </td>
+                          <td scope="row">
+                                <a href="{{ url('/usuario/agregaitemalpedido/'.$product->id) }}" type="button"      rel="tooltip" title="Agregar al Pedido" class="btn btn-info btn-simple btn-xs">
+                                    <i class="material-icons">add_shopping_cart</i>
+                                </a>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    <div class="text-center">
+                        {!! $products->appends(["texto" => $texto]) !!}
+                        {{-- {{ $products->links() }}  --}}   
                     </div>
-                </form>
-            </div>
-            <div class="col-x1-12">
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Código</th>
-                      <th scope="col">Artículo</th>
-                      <th scope="col">Precio</th>
-                      <th scope="col">Descuento Max</th>
-                      <th scope="col">Precio c/Descuento</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($products as $product)
-                    <tr>
-                      <td scope="row">
-                        {{ $product->id}}
-                      </td>
-                      <td scope="row">
-                        {{ $product->nro_art}}
-                      </td>
-                      <td scope="row">
-                        {{ $product->name}}
-                      </td>
-                      <td scope="row">
-                        {{ $product->price * $recargo}}
-                      </td>
-                      <td scope="row">
-                        {{ $product->topedesc}}
-                      </td>
-                      <td scope="row">
-                        {{ $product->con_descuento * $recargo}}
-                      </td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                <div class="text-center">
-                    {!! $products->appends(["texto" => $texto]) !!}
-                    {{-- {{ $products->links() }}  --}}   
+                    
                 </div>
                 
             </div>
-        </div>
-        </div>
-        
+        </div>   
     </div>  
 </div>
 

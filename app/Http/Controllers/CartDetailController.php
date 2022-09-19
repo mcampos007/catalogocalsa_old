@@ -72,7 +72,15 @@ class CartDetailController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Recueperar los datos a modificar
+
+        $cartDetail = CartDetail::findOrfail($id);
+        $notification = [];
+
+        return view('admin.remitos.edititem')->with(compact('cartDetail','notification'));
+        
+        
+
     }
 
     /**
@@ -96,13 +104,14 @@ class CartDetailController extends Controller
     public function destroy(Request $request)
     {
         //
+        //dd($request->toArray());
         $cartDetail = CartDetail::find($request->cart_detail_id);
         if ($cartDetail->cart_id == auth()->user()->cart->id)
             $cartDetail->delete();
-
-        $notification = 'El Item se ha eliminado correctamente..';
-
-        return back()->with(compact('notification'));        
+    
+        $notification = "El item se ha eliminado correctamente.";
+        
+        return back()->with(compact('notification'));
     }
 }
 

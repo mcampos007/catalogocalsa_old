@@ -7,23 +7,37 @@ use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Precio;
 use App\Category;
+use App\Sucursal;
 
 class PrecioController extends Controller
 {
     //
     public function index(Request $request){
+        
         $texto = trim($request->input('texto'));
-        //dd($texto);
+        
+        $usuario_id = auth()->user()->id;
         $recargo = auth()->user()->recargo;
-        $products = DB::table('products')
-            ->select('id','name','price','nro_art','topedesc','con_descuento')
-            ->where('name','LIKE','%'.$texto.'%')
-            ->where('sector_id','1')
-            ->orderBy('name','asc')
-            ->paginate(5);
-
+        
+        if ($usuario_id > 0){
+            $recargo = auth()->user()->recargo;
+            $products = DB::table('products')
+                ->select('id','name','price','nro_art','topedesc','con_descuento')
+                ->where('name','LIKE','%'.$texto.'%')
+                ->where('sector_id','1')
+                ->orderBy('name','asc')
+                ->paginate(5);
+           $sucursales = Sucursal::all();
+            //dd($sucursales);
        //return view('precios')->with(compact('products','texto'));
-        return view('admin.precios.precios')->with(compact('products','texto','recargo'));
+        //return view('admin.precios.precios')->with(compact('products','texto','recargo'));
+            return view('admin.precios.precios')->with(compact('products','texto','recargo','sucursales'));
+        }else{
+            return redirect('/home');
+        }
+
+
+        
     }
 
     public function indexf(Request $request){
@@ -65,5 +79,6 @@ class PrecioController extends Controller
         return view('search.showprices')->with(compact('products','query'));
 
     }
-   
+
+
 }

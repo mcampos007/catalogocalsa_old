@@ -11,6 +11,7 @@ use App\Cart;
 use App\Product;
 use App\CartDetail;
 use App\client;
+use App\Sucursal;
 //use App\CartDetail;
 class CartController extends Controller
 {
@@ -83,6 +84,7 @@ class CartController extends Controller
          $cart->status = 'Pending';
          $cart->client_id = $request->input('client_id');
          $cart->order_date = Carbon::now();
+         $cart->sucursal_id = $request->input('sucursal_id');
          foreach ($cart->details as $item){
            //  echo $item->id."----". $item->product_id;
              $product = Product::find($item->product_id);
@@ -97,17 +99,21 @@ class CartController extends Controller
 
          //Poner precio en los articulos del remito
         
-        $admins = "ventasonline@grupocisterna.com.ar";        
-         //$admins = User::where('admin',true)->get()->pluck('email');
-         mail::to($admins)->send(new NewOrder($client, $cart));
+        //$admins = "mcampos.infocam@gmail.com";        
+        //$admins = User::where('admin',true)->get()->pluck('email');
+        // mail::to($admins)->send(new NewOrder($client, $cart));
          
          $notification = "Tu Pedido ya fué confirmado y en Breve nos pondremos en contacto";
+         $typenotif = 'Sucees';
 
          $clients = Client::All();
          $remitos = Cart::All();
+
+         $sucursales = Sucursal::all();
       
         //$comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
-        return view('home')->with(compact('clients','remitos'));
+        //return view('home')->with(compact('clients','remitos'));
+        return redirect('/home')->with(compact('clients','remitos','sucursales','notification','typenotif'));   
     }
 
     /**

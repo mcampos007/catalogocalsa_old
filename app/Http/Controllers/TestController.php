@@ -17,4 +17,6 @@ class TestController extends Controller
        // dd($categories);
     	return view('welcome')->with(compact('categories','promotions'));
     }
+
+    
 }

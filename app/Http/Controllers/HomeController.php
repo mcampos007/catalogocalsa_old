@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 use App\Cart;
+use App\Sucursal;
 
 class HomeController extends Controller
 {
@@ -25,10 +26,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $clients = Client::All();
-        $remitos = Cart::All();
+      $notification = [];
+      $clients = Client::All();
+      $client = auth()->user();
+      //dd($client);
       
-        //$comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
-        return view('home')->with(compact('clients','remitos'));
-    }
+      if ($client->role == "admin")
+      {
+        $remitos = Cart::paginate(5);
+      }
+      else
+      {
+        $remitos = Cart::where('user_id',$client->id)->get();
+      }
+          
+      $sucursales = Sucursal::All();
+    
+      return view('home')->with(compact('clients','remitos','sucursales','notification'));
+     }
 }

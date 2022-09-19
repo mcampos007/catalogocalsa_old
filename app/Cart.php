@@ -40,5 +40,11 @@ class Cart extends Model
         return 'Sin Asignar';
 
      }
+
+      //$sucursal->cart
+    public function sucursal(){
+
+      return $this->belongsTo(Sucursal::class);
+    }
      
 }

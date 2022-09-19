@@ -32,89 +32,93 @@
                         </a>
                     </li> -->
                 </ul>
+                <!-- Notifiaciones -->
+                @if (session('notification'))
+                    <div class="alert alert-success" role="alert">
+                        <strong>{{ session('notification') }}</strong>
+                    </div>
+                @endif
 
 				<div class="tab-content gallery">
-                    @if (session()->has('notification'))
-                        <div class="alert alert-danger" role="alert">
-                              <strong>Error:!!</strong>{{session('notification')}}
-                        </div>
-                    @endif
+                <!-- Panel de Pedido Activo -->
                     <div class="tab-pane active" id="dashboard">
                         <hr>
-                         @if (auth()->user()->cart)
-             
-                        <p>Tu Pedido tiene {{ auth()->user()->cart->details->count() }} Items</p>
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th class="text-center">Nombre</th>
-                                            <th >Precio</th>
-                                            <th >Cantidad</th>
-                                            <th >Sub total</th>
-                                            <th >Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach( auth()->user()->cart->details as $detail)
-                                        <tr>
-                                            <td class="text-center">
-                                                <img src="{{ url($detail->product->featured_image_url) }}" height="50">
-                                            </td>
-                                            <td>
-                                                <a href=" {{ url('/products/'.$detail->product->id ) }}" > {{ $detail->product->name }}
-                                            </td>
-                                            <td >$ {{ $detail->product->price }}</td>
-                                            <td> {{ $detail->quantity }}</td>
-                                            <td> $ {{ $detail->quantity * $detail->product->price }}</td>
-                                            <td class="td-actions">
+                         @if (auth()->user()->cart)                       
+                            <p>Pedido N° {{ auth()->user()->cart->id }}  y tiene {{ auth()->user()->cart->details->count() }} Items</p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Nombre</th>
+                                        <th >Precio</th>
+                                        <th >Cantidad</th>
+                                        <th >Sub total</th>
+                                        <th >Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach( auth()->user()->cart->details as $detail)
+                                    <tr>
+                                        <td class="text-center">
+                                            <img src="{{ url($detail->product->featured_image_url) }}" height="50">
+                                        </td>
+                                        <td>
+                                            <a href="#" > {{ $detail->product->name }}
+                                            {{-- <a href=" {{ url('/products/'.$detail->product->id ) }}" > {{ $detail->product->name }} --}}
+                                        </td>
+                                        <td >$ {{ $detail->product->price }}</td>
+                                        <td> {{ $detail->quantity }}</td>
+                                        <td> $ {{ $detail->quantity * $detail->product->price }}</td>
+                                        <td class="td-actions">  
+                                            <form method="post" action="{{ url('/cart') }}">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE')}}
+                                                <input type="hidden" name="cart_detail_id" value="{{ $detail->id }}">
+                                                <a href="/usuario/editaitemdelpedido/{{ $detail->id }}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs">
+                                                <i class="fa fa-edit"></i>
+                                                </a>
                                                 
-                                                <form method="post" action="{{ url('/cart') }}">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE')}}
-                                                    <input type="hidden" name="cart_detail_id" value="{{ $detail->id }}">
-                                                    <a href=" {{ url('/products/'.$detail->product->id ) }}" target="_blank" type="button" rel="tooltip" title="Ver" class="btn btn-info btn-simple btn-xs">
-                                                    <i class="fa fa-info"></i>
-                                                    </a>
-                                                    
-                                                    <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                        </table>
-                        <p> <strong> Importe a Pagar: {{ auth()->user()->cart->total }}</strong>  </p>
-
-                        
+                                                <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <p class="h2"> <strong> Importe a Pagar: {{ auth()->user()->cart->total }}</strong>  </p>
                         @endif
                         <div class="text-center">
                             <form method="post" action="{{ url('/order')}}">
                                 {{ csrf_field() }}
-                                <!-- Sector para Ingresar el cliente en el pedido -->
-                                <!-- <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group label-floating">
-                                            <label class="form-group label-floating">Seleccionar  Cliente  </label>
-                                            <select  class= "form-control" name="client_id" value="{{ old('client_id') }}">
-                                                <option value="0">Sin Asignar Cliente</option>
-                                                @foreach($clients as $client)
-                                                {
-                                                    <option value="{{$client->id}}">{{$client->name}}</option>   
-                                                }
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                 <div class="row">
+                                    @if(auth()->user())
+                                     <div class="col-md-6 form-group">
+                                    {{-- <div class="form-group label-floating"> --}}
+                                        <label class="form-group label-floating" >Debe Seleccionar la sucursal.</label>
+                                        <select class="form-control" id="inputGroupSelect01" name="sucursal_id">
+                                            {{-- <option selected>Selecciones la sucursal ...</option> --}}
+                                            @foreach($sucursales as $sucursal)
+                                            {
+                                                <option value="{{ $sucursal->id }}">{{ $sucursal->name }}</option>
+                                            }
+                                            @endforeach
+                                          </select>
                                     </div>
-                                </div>  -->
-                                <button class="btn btn-primary btn-round">
-                                    <i class="material-icons">done</i> Confirmar Pedido
-                                </button>
+                                    @endif
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <button class="btn btn-primary btn-round">
+                                            <i class="material-icons">done</i> Enviar Pedido
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
                         </div>  
                     </div>
+                <!-- Panel de Pedidos -->
                     <div class="tab-pane text-center" id="remitos">
                         <!-- Lista de Remitos  -->
                         <hr>
@@ -125,42 +129,41 @@
                                         <th class="text-center">#</th>
                                         <th class="text-center">Fecha</th>
                                         <th class="text-center">Estado</th>
-                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center">Sucursal</th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($remitos as $key => $remito)
-                                            @if ($remito->client_name != 'Sin Asignar')
+                                            @if ($remito->status != 'Active')
                                             
                                                 <tr>
                                                     <td> {{ $remito->id }} </td>
                                                     <td> {{ $remito->order_date }} </td>
                                                     <td> {{ $remito->status }} </td>
-                                                    <td> {{ $remito->client_name }} </td>
+                                                    <td> {{ $remito->sucursal->name }} </td>
                                                     <td class="td-actions">
-                                                            
-                                                            <form method="post" action="{{ url('/admin/remito/'.$remito->id).'/facturar' }}">
-                                                                {{ csrf_field() }}
-                                                                {{ method_field('DELETE')}}
-                                                                <input type="hidden" name="cart_id" value="{{ $remito->id }}">
-                                                                <a href=" {{  url('/admin/remito/'.$remito->id) }}"  type="button" rel="tooltip" title="Ver" class="btn btn-info btn-simple btn-xs">
-                                                                <i class="fa fa-info"></i>
-                                                                </a>
-                                                                <a href=" {{  url('/admin/remito/'.$remito->id.'/edit') }}"  type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs">
-                                                                <i class="fa fa-edit"></i>
-                                                                </a>
-                                                                <button type="submit" rel="tooltip" title="Facturar" class="btn btn-danger btn-simple btn-xs">
-                                                                    <i class="fa fa-point_of_sale"></i>
-                                                                    <span class="material-icons">
-                                                                    point_of_sale
-                                                                    </span>
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                    
+
+                                                        @if (auth()->user()->role =='admin')
+                                                        <form method="post" action="{{ url('/admin/remito') }}">
+                                                        @else
+                                                        <form method="post" action="{{ url('/usuario/cart') }}">
+                                                        @endif
+                                                            {{ csrf_field() }}
+                                                            {{ method_field('DELETE')}}   
+                                                            <input type="hidden" name="id" value="{{ $remito->id }}">    
+                                                            <a href=" {{  url('/'.auth()->user()->role.'/remito/'.$remito->id) }}"  type="button" rel="tooltip" title="Ver" class="btn btn-info btn-simple btn-xs">
+                                                            <i class="fa fa-edit"></i>
+                                                            </a>                                     
+                                                            <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
+                                                                <i class="fa fa-point_of_sale"></i>
+                                                                <span class="material-icons">
+                                                                delete
+                                                                </span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
-                                            
                                             @endif
                                     
                                     @endforeach
@@ -168,7 +171,6 @@
                                 </tbody>
                             </table>
                          @endif
-
                     </div>
                     <!-- <div class="tab-pane text-center" id="shows">
                         <div class="row">
@@ -190,7 +192,6 @@
 			</div>
 		</div> 
     </div>
-
 </div>
 
 @include('includes.footer')
