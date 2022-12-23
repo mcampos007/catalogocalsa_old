@@ -29,10 +29,14 @@
                         </div>
                     @endif
                 <div class="row">
-                    
+                    @if(auth()->user()->role=="admin")
                     <a href="{{ url('/admin/cajas/'.$caja->id.'/egresocreate')}}" class="btn btn-primary btn-round">Nuevo Egreso</a>
                     <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
-              
+                    @else
+                    <a href="{{ url('/usuario/cajas/'.$caja->id.'/egresocreate')}}" class="btn btn-primary btn-round">Nuevo Egreso</a>
+                    <a href="{{ url('/usuario/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                    @endif
+
                     <div class="row justify-content-center">
                         <div class="col-4 h2">
                           Total de Egresos: ${{ $t }}
@@ -55,10 +59,18 @@
                                 <td>{{ $gasto->detalle }}</td>
                                 <td>{{ $gasto->importe }}</td>
                                 <td class="td-actions text-right">
+                                    @if(auth()->user()->role=="admin")
                                     <form method="post" action="{{ url('/admin/cajas/egreso/'.$gasto->id)}}">
+                                    @else
+                                    <form method="post" action="{{ url('/usuario/cajas/egreso/'.$gasto->id)}}">
+                                    @endif
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE')}}
+                                        @if(auth()->user()->role=="admin")
                                         <a href="{{ url('/admin/cajas/egreso/'.$gasto->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs ">
+                                        @else
+                                        <a href="{{ url('/usuario/cajas/egreso/'.$gasto->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs ">
+                                        @endif                                        
                                         <i class="bi bi-cash-coin"></i>
                                         </a>
                                         <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">

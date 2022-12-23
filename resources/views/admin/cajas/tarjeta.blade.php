@@ -29,9 +29,14 @@
                         </div>
                     @endif
                 <div class="row">
-                    
+                    @if(auth()->user()->role=="admin")
                     <a href="{{ url('/admin/cajas/'.$caja->id.'/tarjetacreate')}}" class="btn btn-primary btn-round">Nuevo Cierre de Tarjeta</a>
                     <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                    @else
+                    <a href="{{ url('/usuario/cajas/'.$caja->id.'/tarjetacreate')}}" class="btn btn-primary btn-round">Nuevo Cierre de Tarjeta</a>
+                    <a href="{{ url('/usuario/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                    @endif
+                    
               
                     <div class="row justify-content-center">
                         <div class="col-4 h2">
@@ -59,7 +64,11 @@
                                 <td>{{ $tarjeta->terminal_number }}</td>
                                 <td>{{ $tarjeta->lote_number }}</td>
                                 <td class="td-actions text-right">
+                                    @if(auth()->user()->role=="admin")
                                     <form method="post" action="{{ url('/admin/cajas/tarjeta/'.$tarjeta->id)}}">
+                                    @else
+                                    <form method="post" action="{{ url('/usuario/cajas/tarjeta/'.$tarjeta->id)}}">
+                                    @endif
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE')}}
                                         <a href="{{ url('/admin/cajas/tarjeta/'.$tarjeta->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs ">

@@ -16,6 +16,7 @@ use App\Tarjeta;
 use App\Otropago;
 use App\Tipomovimiento;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class CajaController extends Controller
 {
@@ -24,14 +25,28 @@ class CajaController extends Controller
     {
        
        // dd($puntodeventas);
-        $cajas = Caja::where('status','Abierta')->paginate(10);
+        if (auth()->user()->role == "usuario")
+        {
+         $cajas = Caja::where('status','Abierta')->where('user_id',auth()->user()->id)->paginate(10);
+             
+        }
+        else
+        {
+            $cajas = Caja::where('status','Abierta')->paginate(10);
+            
+        }
         return view('admin.cajas.index')->with(compact('cajas'));
+            
+
     }
 
     // Lista de Cajas Cerradas
     public function indexcerradas()
     {
-        $cajas = Caja::where('status','Cerrada')->paginate(10);
+        if(auth()->user()->role=="admin")
+            $cajas = Caja::where('status','Cerrada')->paginate(10);
+        else
+            $cajas = Caja::where('status','Cerrada')->where('user_id', auth()->user()->id)->paginate(10);
         return view('admin.cajas.indexcerradas')->with(compact('cajas'));
     }
 
@@ -47,7 +62,7 @@ class CajaController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
+       //dd($request);
         //validar
         $messages =[
             'puntodeventa_id.required' => "Se debe Seleccionar un Punto de Venta",
@@ -79,10 +94,19 @@ class CajaController extends Controller
         /*$cajaabierta = DB::table('cajas')->where('status', 'Abierta')
             ->where('puntodeventa_id',$caja->puntodeventa_id)
             ->get();*/
-        $cajaabierta = Caja::where('status','Abierta')
+        if(auth()->user()->role="usuario")
+        {
+            $cajaabierta = Caja::where('status','Abierta')
+                ->where('puntodeventa_id',$caja->puntodeventa_id)
+                ->where('user_id',auth()->user()->id)     //
+               ->count();  
+        }else
+        {
+            $cajaabierta = Caja::where('status','Abierta')
                 ->where('puntodeventa_id',$caja->puntodeventa_id)     //
-               ->count();
-        
+               ->count();  
+        }
+       
         if ($cajaabierta== 0){
             $caja->save();
 
@@ -311,7 +335,7 @@ class CajaController extends Controller
         $messages = [
             'detalle.required' => 'Se debe Ingresar un detalle.',
             'detalle.min' => 'El detalle debe contener al menos tres caracteres.',
-            'importe.numeric' => 'El importe se debe compleetar con numeros.',
+            'importe.numeric' => 'El importe se debe completar con numeros.',
             'fch_emision.required' => 'Se debe elegir una Fecha',
             'fch_cobr.required' => 'Se debe elegir una Fecha',
             'importe.required' => 'Se debe ingresar el importe del Cheque',
@@ -345,7 +369,7 @@ class CajaController extends Controller
         $cheque->titular =  $request->input('titular');
         $cheque->banco_id =  $request->input('banco_id');
         $cheque->number =  $request->input('number');
-        $cheque->estadocheque_id =  1;  //$request->input('estadocheque_id');
+        $cheque->estadocheque_id =  "1";  //$request->input('estadocheque_id');
         $cheque->cajas_id = $request->input('caja_id');
 
         $cheque->save();
@@ -726,11 +750,15 @@ class CajaController extends Controller
         $caja = Caja::find($id);
         $caja->status = "Cerrada";
         $caja->save();
-        return redirect('/admin/cajas');
+        if(auth()->user()->role=="admin")
+            return redirect('/admin/cajas');
+        else
+            return redirect('/usuario/cajas');
 
     }
     // Imprimir Caja Cerrada
-    public function imprimir($id){
+    public function imprimir(Request $request){
+       $id = $request->input("caja_id");
         $caja = Caja::find($id);
         
         $gastos = Gasto::where('cajas_id',$caja->id)->get();
@@ -776,4 +804,82 @@ class CajaController extends Controller
             ));
 
     }
+    
+    public function generatePDF(Request $request)
+    {
+        //dd($request);
+        $id = $request->input("id");
+        
+        //$data = $data+ ['id' => $id];
+        //dd($data1);
+         
+        $caja = Caja::find($id);
+        $efectivo = Efectivo::find($caja->id);
+        $totbillete = 0.00;
+        $totbillete += $caja->efectivo->billete1000 * 1000;
+        $totbillete += $caja->efectivo->billete500 * 500;
+        $totbillete += $caja->efectivo->billete200 * 200;
+        $totbillete += $caja->efectivo->billete100 * 100;
+        $totbillete += $caja->efectivo->billete50 * 50;
+        $totbillete += $caja->efectivo->billete20 * 20;
+        $totbillete += $caja->efectivo->billete10 * 10;
+        //TArjetas
+        $tarjetas = Tarjeta::where('cajas_id',$caja->id)->get();
+        $sumtarjetas = 0;
+        foreach($tarjetas as $g){
+            $sumtarjetas += $g->importe;
+        }
+        // Otros FP
+        $otrosfp = Otropago::where('cajas_id',$caja->id)->get();
+        $sumotrosfp = 0;
+        foreach($otrosfp as $g){
+            $sumotrosfp += $g->importe;
+        }
+        //Gastos
+        $gastos = Gasto::where('cajas_id',$caja->id)->get();
+        $sumgasto = 0;
+        foreach($gastos as $g){
+            $sumgasto += $g->importe;
+        }
+        //Cheques
+        $cheques = Cheque::where('cajas_id',$caja->id)->get();
+        $sumcheques = 0;
+        foreach($cheques as $g){
+            $sumcheques += $g->importe;
+        }
+
+        view()->share('cajaPDF',
+            $caja, 
+            $efectivo, 
+            $tarjetas, 
+            $sumtarjetas,
+            $totbillete,
+            $otrosfp,
+            $sumotrosfp,
+            $cheques,
+            $sumcheques,
+            $gastos,
+            $sumgasto
+
+        );
+        $pdf = PDF::loadView('cajapdf', [
+            'caja' => $caja, 
+            'efectivo'=>$efectivo,
+            'tarjetas' =>$tarjetas,
+            'sumtarjetas' => $sumtarjetas,
+            'totbillete' => $totbillete,
+            'otrosfp' => $otrosfp,
+            'sumotrosfp' => $sumotrosfp,
+            'cheques' => $cheques,
+            'sumcheques' => $sumcheques,
+            'gastos' => $gastos,
+            'sumgasto' => $sumgasto
+        ]);
+
+        //$pdf = PDF::loadView('cajapdf', $data, compact('caja', 'tarjetas'));
+        //$pdf->setPaper('A4', 'landscape');
+  
+        return $pdf->download('cajadiaria.pdf');
+    }
+    
 }

@@ -11,7 +11,7 @@
 <div class="main main-raised">
     <div class="container">
         <div class="section text-center">
-            <h2 class="title">Listado de Cajas Cerradas</h2>
+            <h2 class="title">Listado de Cajas Cerradas {{auth()->user()->role}}</h2>
             <div class="card-body">
                 @if (session('notification'))
                 
@@ -29,8 +29,11 @@
                         </div>
                     @endif
                 <div class="row ">
-                    
+                    @if(auth()->user()->role=="admin")
                     <a href="{{ url('/admin/cajas/create')}}" class="btn btn-primary btn-round">Nueva Caja</a>
+                    @else
+                    <a href="{{ url('/usuario/cajas/create')}}" class="btn btn-primary btn-round">Nueva Caja</a>
+                    @endif
                     <table class="table-responsive table-hover">
                         <thead>
                             <tr>
@@ -56,31 +59,17 @@
                                 <td>{{ $caja->totalplanilla}}</td>
                                 <td>{{ $caja->status}}</td>
                                 <td class="td-actions text-right">        
-                                    <form method="post" action="{{ url('/admin/cajas/'.$caja->id)}}">
+                                    @if(auth()->user()->role=="admin")
+                                    <form method="post" action="{{ url('/admin/cajas/'.$caja->id.'/imprimir')}}">
+                                    @else
+                                    <form method="post" action="{{ url('/usuario/cajas/'.$caja->id.'/imprimir')}}">
+                                    @endif
                                         {{ csrf_field() }}
-                                        {{ method_field('DELETE')}}
+                                        <input type="hidden" name="caja_id" value="{{$caja->id}}">
                                         @if($caja->status == 'Cerrada')
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/arqueo')}}" type="button" rel="tooltip" title="Arqueo" class="btn btn-info btn-simple btn-xs ">
+                                            <button type="submit" title="Imprimir" class="btn btn-info btn-simple btn-xs ">
                                             <i class="bi bi-cash-coin"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/egreso')}}" type="button" rel="tooltip" title="Egresos" class="btn btn-info btn-simple btn-xs">
-                                            <i class="bi bi-currency-dollar"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/cheque')}}" type="button" rel="tooltip" title="Cheques" class="btn btn-info btn-simple btn-xs">
-                                            <i class="bi bi-currency-exchange"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/tarjeta')}}" type="button" rel="tooltip" title="Tarjetas" class="btn btn-info btn-simple btn-xs">
-                                            <i class="fa fa-info"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/otrafp')}}" type="button" rel="tooltip" title="Otros MP" class="btn btn-info btn-simple btn-xs">
-                                            <i class="fa fa-calendar-check-o"></i>
-                                            </a>
-                                            <a href=" {{ url('/admin/cajas/'.$caja->id.'/cerrar')}}" type="button" rel="tooltip" title="Cerrar" class="btn btn-success btn-simple btn-xs">
-                                            <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
-                                            <i class="fa fa-times"></i>
-                                        </button>
+                                            </button>                                 
                                         @endif    
                                         
                                     </form>

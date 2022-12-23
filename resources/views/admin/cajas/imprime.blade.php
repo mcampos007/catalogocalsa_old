@@ -33,13 +33,21 @@
                 @include('admin.cajas.includes.gastos')
                 @include('admin.cajas.includes.cheques')
                 @include('admin.cajas.includes.resumen')
-            <form method="post" action="{{ url('/admin/cajas/cerrar')}}">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="id" value="{{$caja->id}}">
+                @if(auth()->user()->role=="admin")
+                <form method="POST" action="{{ url('/admin/cajas/caja-pdf')}}">
+                @else
+                <form method="POST" action="{{ url('/usuario/cajas/caja-pdf')}}">
+                @endif
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{$caja->id}}">
                 <button type="submit" rel="tooltip" title="Imprimir" class="btn btn-primary btn-round">
                     Imprimir
                 </button>
+                @if(auth()->user()->role=="admin")
                 <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                @else
+                <a href="{{ url('/usuario/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                @endif
             </form > 
             </div>        
         </div>

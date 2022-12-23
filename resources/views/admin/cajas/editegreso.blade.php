@@ -22,7 +22,11 @@
                     </ul>
                 </div>
             @endif
+            @if(auth()->user()->role=="admin")
             <form method="post" action="{{ url('admin/cajas/egreso/edit') }}" enctype="multipart/form-data">
+            @else
+            <form method="post" action="{{ url('usuario/cajas/egreso/edit') }}" enctype="multipart/form-data">
+            @endif            
                 {{csrf_field() }} 
                 <input type="hidden" name="id" value="{{$gasto->id}}">
                 <div class="form-row">
@@ -55,7 +59,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <button type="submit" class="btn btn-primary">Actualizar Movimiento</button>
+                        @if(auth()->user()->role=="admin")
                          <a href=" {{ url('/admin/cajas/'.$gasto->id.'/egreso')}}" class="btn btn-default">Cancelar</a>
+                        @else
+                        <a href=" {{ url('/admin/cajas/'.$gasto->id.'/egreso')}}" class="btn btn-default">Cancelar</a>
+                        @endif
                     </div>
                 </div>
             </form>

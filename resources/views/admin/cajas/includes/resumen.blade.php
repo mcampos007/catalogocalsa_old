@@ -51,17 +51,17 @@
             </tr>
             <tr>
                 <td class="col-md-2 text-center bg-primary ">Total Rendido</td>    
-                <td class="col-md-2 text-right bg-primary ">{{$totbillete + $sumcheques + $sumotrosfp}}</td>
+                <td class="col-md-2 text-right bg-primary ">{{$totbillete + $sumcheques + $sumotrosfp + $sumtarjetas}}</td>
             </tr>
-            @if($caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp -$sumgasto> 0)
+            @if($caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp -$sumgasto - $sumtarjetas > 0)
             <tr>
                 <td class="col-md-2 text-center bg-danger ">Faltante</td>    
-                <td class="col-md-2 text-right bg-danger ">{{$caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp -$sumgasto}}</td>
+                <td class="col-md-2 text-right bg-danger ">{{round($caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp -$sumgasto - $sumtarjetas,2)}}</td>
             </tr>
             @else
                 <tr>
                 <td class="col-md-2 text-center bg-primary ">Sobrante</td>    
-                <td class="col-md-2 text-right bg-primary ">{{$caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp -$sumgasto}}</td>
+                <td class="col-md-2 text-right bg-primary ">{{round($caja->totalplanilla - $totbillete - $sumcheques - $sumotrosfp - $sumgasto - $sumtarjetas,2)}}</td>
                 </tr>
             @endif
         </tbody>

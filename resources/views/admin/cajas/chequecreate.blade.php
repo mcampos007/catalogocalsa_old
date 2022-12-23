@@ -22,7 +22,11 @@
                     </ul>
                 </div>
             @endif
+            @if(auth()->user()->role=="admin")
             <form method="post" action="{{ url('admin/cajas/cheque') }}" enctype="multipart/form-data">
+            @else
+            <form method="post" action="{{ url('usuario/cajas/cheque') }}" enctype="multipart/form-data">
+            @endif
                 {{csrf_field() }} 
                 <input type="hidden" name="caja_id" value="{{$caja->id}}">
                 <div class="form-row">
@@ -64,7 +68,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="importe">Importe</label>
-                        <input type="number" class="form-control" 
+                        <input type="text" class="form-control" 
                         value ="{{old('importe')}}"
                         name="importe" required>  
                     </div>
@@ -124,7 +128,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <button type="submit" class="btn btn-primary">Registrar Cheque</button>
+                        @if(auth()->user()->role=="admin")
                          <a href=" {{ url('/admin/cajas')}}" class="btn btn-default">Cancelar</a>
+                        @else
+                        <a href=" {{ url('/usuario/cajas')}}" class="btn btn-default">Cancelar</a>
+                        @endif
+
                     </div>
                 </div>
             </form>

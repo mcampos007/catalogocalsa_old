@@ -29,8 +29,12 @@
                         </div>
                     @endif
                 <div class="row ">
-                    
-                    <a href="{{ url('/admin/cajas/create')}}" class="btn btn-primary btn-round">Nueva Caja</a>
+                    @if(auth()->user()->role=="admin")
+                        <a href="{{ url('/admin/cajas/create')}}" class="btn btn-primary btn-round">
+                    @else
+                        <a href="{{ url('/usuario/cajas/create')}}" class="btn btn-primary btn-round">
+                    @endif
+                        Nueva Caja</a>
                     <table class="table-responsive table-hover">
                         <thead>
                             <tr>
@@ -59,29 +63,12 @@
                                     <form method="post" action="{{ url('/admin/cajas/'.$caja->id)}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE')}}
-                                        @if($caja->status == 'Abierta')
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/arqueo')}}" type="button" rel="tooltip" title="Arqueo" class="btn btn-info btn-simple btn-xs ">
-                                            <i class="bi bi-cash-coin"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/egreso')}}" type="button" rel="tooltip" title="Egresos" class="btn btn-info btn-simple btn-xs">
-                                            <i class="bi bi-currency-dollar"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/cheque')}}" type="button" rel="tooltip" title="Cheques" class="btn btn-info btn-simple btn-xs">
-                                            <i class="bi bi-currency-exchange"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/tarjeta')}}" type="button" rel="tooltip" title="Tarjetas" class="btn btn-info btn-simple btn-xs">
-                                            <i class="fa fa-info"></i>
-                                            </a>
-                                            <a href="{{ url('/admin/cajas/'.$caja->id.'/otrafp')}}" type="button" rel="tooltip" title="Otros MP" class="btn btn-info btn-simple btn-xs">
-                                            <i class="fa fa-calendar-check-o"></i>
-                                            </a>
-                                            <a href=" {{ url('/admin/cajas/'.$caja->id.'/cerrar')}}" type="button" rel="tooltip" title="Cerrar" class="btn btn-success btn-simple btn-xs">
-                                            <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
-                                            <i class="fa fa-times"></i>
-                                        </button>
-                                        @endif    
+                                        @if(auth()->user()->role=="usuario")
+                                            @include('admin.cajas.indexusuario')
+                                        @else
+                                            @include('admin.cajas.indexadmin')
+                                        @endif
+                                            
                                         
                                     </form>
                                 </td>

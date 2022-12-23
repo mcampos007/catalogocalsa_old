@@ -22,7 +22,11 @@
                     </ul>
                 </div>
             @endif
-            <form method="post" action="{{ url('admin/cajas') }}" enctype="multipart/form-data">
+            @if(auth()->user()->role=="admin")
+                <form method="post" action="{{ url('admin/cajas') }}" enctype="multipart/form-data">
+            @else
+                <form method="post" action="{{ url('usuario/cajas') }}" enctype="multipart/form-data">
+            @endif
                 {{csrf_field() }}  
                 <div class="form-row">
                     <label for="address">Fecha</label>
@@ -56,9 +60,13 @@
                       <label for="user">Usuario</label>
                       <select id="user" class="form-control" name="user_id" required>
                         <option value="0" selected="">...</option>
-                        @foreach($users as $user)
-                            <option value ="{{$user->id}}">{{$user->name}} @if(old('user_id')== $user->id) selected @endif</option>
-                        @endforeach
+                        @if(auth()->user()->role=="usuario")
+                              <option value ="{{auth()->user()->id }}">{{auth()->user()->name}} @if(old('user_id')== auth()->user()->id) selected @endif</option>
+                        @else
+                            @foreach($users as $user)
+                                <option value ="{{$user->id}}">{{$user->name}} @if(old('user_id')== $user->id) selected @endif</option>
+                            @endforeach
+                        @endif
                       </select>
                     </div>
                     
@@ -78,7 +86,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <button type="submit" class="btn btn-primary">Registrar Caja</button>
-                         <a href=" {{ url('/admin/cajas')}}" class="btn btn-default">Cancelar</a>
+                        @if(auth()->user()->role=="admin")
+                            <a href=" {{ url('/admin/cajas')}}" class="btn btn-default">Cancelar</a>
+                        @else
+                            <a href=" {{ url('/usuario/cajas')}}" class="btn btn-default">Cancelar</a>
+                        @endif
                     </div>
                 </div>
             </form>

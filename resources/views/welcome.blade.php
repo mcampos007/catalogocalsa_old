@@ -4,63 +4,62 @@
 @section('body-class','landing-page')
 
 @section('styles')
-    <style >
-        .team .row .col-md-4 {
-            margin-bottom: 5em;
-        }
+   <style >
+    .team .row .col-md-4 {
+    margin-bottom: 5em;
+    }
 
-        .team .row {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -webkit-flexbox;
-            display: -ms-flexbox;
-            display: flex;
-            flex-wrap:wrap;
-        }
-        .team .row > [class*='col-']{
-            display: flex;
-            flex-direction: column;
-        }
+    .team .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap:wrap;
+    }
+    .team .row > [class*='col-']{
+    display: flex;
+    flex-direction: column;
+    }
 
-        .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
-        .tt-hint {
-            width: 396px;
-            height: 30px;
-            padding: 8px 12px;
-            font-size: 24px;
-            line-height: 30px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-            }
+    .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+    .tt-hint {
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    }
 
-         .tt-query {
-          -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-             -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        }
+    .tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
 
-        .tt-hint {
-              color: #999
-            }
+    .tt-hint {
+      color: #999
+    }
 
-            .tt-menu {    /* used to be tt-dropdown-menu in older versions */
-              width: 222px;
-              margin-top: 4px;
-              padding: 4px 0;
-              background-color: #fff;
-              border: 1px solid #ccc;
-              border: 1px solid rgba(0, 0, 0, 0.2);
-              -webkit-border-radius: 4px;
-                 -moz-border-radius: 4px;
-                      border-radius: 4px;
-              -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-                 -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-                      box-shadow: 0 5px 10px rgba(0,0,0,.2);
-            }
+    .tt-menu {    /* used to be tt-dropdown-menu in older versions */
+      width: 222px;
+      margin-top: 4px;
+      padding: 4px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 4px;
+         -moz-border-radius: 4px;
+              border-radius: 4px;
+      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
 
-    </style>
-
+</style>
 @endsection
 @section('content')
 <!--<div class="header header-filter" style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">

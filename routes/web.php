@@ -202,7 +202,59 @@ Route::middleware(['auth', 'usuario'])->prefix('usuario')->namespace('Admin')->g
 	Route::delete('/cart','PrecioController@destroy');		//Eliminar un Pedido 
 	Route::post('/cart/edit','PrecioController@update');	//Actualizar datos del Item
 	Route::get('/editaitemdelpedido/{id}', 'PrecioController@editaitem');	// Editar Item del Pedido
+
+	// Módulo de Cajas
+	Route::get('/cajas','CajaController@index');					// Caja Nueva
+	Route::get('/cajas/create','CajaController@create');			// Form de alta de Cajas
+	Route::post('/cajas','CajaController@store');					// Alta de la Caja
+	Route::get('/cajas/{id}/cerrar','CajaController@formcerrar');	// Form de Cierre de Caja
+	Route::post('/cajas/cerrar','CajaController@cerrar');			// Cierre de Caja
+	Route::post('/cajas/{id}/imprimir','CajaController@imprimir');	// IMprimir Caja Cerrada
+	Route::post('/cajas/caja-pdf','CajaController@generatePDF');				//Generar pd de caja
+
+	Route::get('/cajascerradas','CajaController@indexcerradas');			// Listado de Cajas Cerradas
+
+	// Arqueos
+	Route::get('/cajas/{id}/arqueo','CajaController@arqueo');	// Form para registro de Arqueo
+	Route::post('/cajas/arqueo','CajaController@storearqueo');	// Alta de Arqueo
+
+	// Cheques
+	Route::get('/cajas/{id}/cheque','CajaController@cheque');				// Listado de cheques
+	Route::get('/cajas/{id}/chequecreate','CajaController@chequecreate');	// Form de cheques
+	Route::post('/cajas/cheque','CajaController@storecheque');				// Alta de cheque
+	Route::get('/cajas/cheque/{id}/edit','CajaController@editcheque');		// Edición de cheque
+	Route::post('/cajas/cheque/edit','CajaController@chequeupdate');		// Actualización del cheque
+	Route::delete('/cajas/cheque/{id}','CajaController@chequedestroy');		// Eliminación de un cheque
+
+	// Egresos
+	Route::get('/cajas/{id}/egreso','CajaController@egreso');				// Listado de Egresos
+	Route::get('/cajas/{id}/egresocreate','CajaController@egresocreate');	// Form de Egresos
+	Route::post('/cajas/egreso','CajaController@storeegreso');				// Alta de Egreso
+	Route::get('/cajas/egreso/{id}/edit','CajaController@editegreso');		// Edición de Egreso
+	Route::post('/cajas/egreso/edit','CajaController@egresoupdate');		// Actualización del Egreso
+	Route::delete('/cajas/egreso/{id}','CajaController@egresodestroy');		// Eliminación de un Egreso
+
+	// Tarjetas
+	Route::get('/cajas/{id}/tarjeta','CajaController@tarjeta');				// Listado de tarjetas
+	Route::get('/cajas/{id}/tarjetacreate','CajaController@tarjetacreate');	// Form de tarjetas
+	Route::post('/cajas/tarjeta','CajaController@storetarjeta');				// Alta de tarjeta
+	Route::get('/cajas/tarjeta/{id}/edit','CajaController@edittarjeta');		// Edición de tarjeta
+	Route::post('/cajas/tarjeta/edit','CajaController@tarjetaupdate');		// Actualización del tarjeta
+	Route::delete('/cajas/tarjeta/{id}','CajaController@tarjetadestroy');		// Eliminación de un tarjeta
+
+	// Otro MP
+	Route::get('/cajas/{id}/otrafp','CajaController@otrafp');				// Listado de otrafps
+	Route::get('/cajas/{id}/otrafpcreate','CajaController@otrafpcreate');	// Form de otrafps
+	Route::post('/cajas/otrafp','CajaController@storeotrafp');				// Alta de otrafp
+	Route::get('/cajas/otrafp/{id}/edit','CajaController@editotrafp');		// Edición de otrafp
+	Route::post('/cajas/otrafp/edit','CajaController@otrafpupdate');		// Actualización del otrafp
+	Route::delete('/cajas/otrafp/{id}','CajaController@otrafpdestroy');		// Eliminación de un otrafp
+
+
 });
+
+Route::get('pdf', 'PdfController@caja');
+
 
 /*Route::middleware(['auth', 'client'])->namespace('Cliente')->group(function () {
     Route::get('/schedule','ScheduleController@edit');

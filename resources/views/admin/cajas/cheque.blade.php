@@ -29,10 +29,13 @@
                         </div>
                     @endif
                 <div class="row">
-                    
+                    @if(auth()->user()->role=="admin")
                     <a href="{{ url('/admin/cajas/'.$caja->id.'/chequecreate')}}" class="btn btn-primary btn-round">Nuevo Cheque</a>
                     <a href="{{ url('/admin/cajas')}}" class="btn btn-primary btn-round">Volver</a>
-              
+                    @else
+                    <a href="{{ url('/usuario/cajas/'.$caja->id.'/chequecreate')}}" class="btn btn-primary btn-round">Nuevo Cheque</a>
+                    <a href="{{ url('/usuario/cajas')}}" class="btn btn-primary btn-round">Volver</a>
+                    @endif
                     <div class="row justify-content-center">
                         <div class="col-4 h2">
                           Total de Cheques: ${{ $t }}
@@ -58,9 +61,15 @@
                                     <form method="post" action="{{ url('/admin/cajas/cheque/'.$cheque->id)}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE')}}
+                                        @if(auth()->user()->role=="admin")
                                         <a href="{{ url('/admin/cajas/cheque/'.$cheque->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs ">
                                         <i class="bi bi-cash-coin"></i>
                                         </a>
+                                        @else
+                                        <a href="{{ url('/usuario/cajas/cheque/'.$cheque->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-info btn-simple btn-xs ">
+                                        <i class="bi bi-cash-coin"></i>
+                                        </a>
+                                        @endif
                                         <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
                                             <i class="fa fa-times"></i>
                                         </button>
